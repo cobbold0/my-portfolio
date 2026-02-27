@@ -7,6 +7,10 @@ import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
+import { getContentSource, isSanityEnabled } from "@/lib/content-source";
+import { getPostBySlugFromSanity, getPostsMetaFromSanity } from "@/lib/sanity/data";
+import type { BlogPostDetail, BlogPostMeta } from "@/lib/sanity/types";
+export type { BlogPostMeta, BlogPostDetail } from "@/lib/sanity/types";
 
 type Frontmatter = {
   title: string;
@@ -16,25 +20,14 @@ type Frontmatter = {
   coverImage: string;
 };
 
-export type BlogPostMeta = Frontmatter & {
-  slug: string;
-  readingTime: string;
-};
-
 const blogDir = path.join(process.cwd(), "src", "content", "blog");
 
-export async function getAllPostSlugs() {
+async function getAllPostSlugsLocal() {
   const files = await fs.readdir(blogDir);
   return files.filter((file) => file.endsWith(".mdx")).map((file) => file.replace(/\.mdx$/, ""));
 }
 
-export async function getAllPostsMeta(): Promise<BlogPostMeta[]> {
-  const slugs = await getAllPostSlugs();
-  const posts = await Promise.all(slugs.map((slug) => getPostMeta(slug)));
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
-}
-
-export async function getPostMeta(slug: string): Promise<BlogPostMeta> {
+async function getPostMetaLocal(slug: string): Promise<BlogPostMeta> {
   const filePath = path.join(blogDir, `${slug}.mdx`);
   const raw = await fs.readFile(filePath, "utf8");
   const { data, content } = matter(raw);
@@ -43,11 +36,18 @@ export async function getPostMeta(slug: string): Promise<BlogPostMeta> {
   return {
     ...fm,
     slug,
+    date: fm.date,
     readingTime: readingTime(content).text
   };
 }
 
-export async function getPostBySlug(slug: string) {
+async function getAllPostsMetaLocal(): Promise<BlogPostMeta[]> {
+  const slugs = await getAllPostSlugsLocal();
+  const posts = await Promise.all(slugs.map((slug) => getPostMetaLocal(slug)));
+  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+async function getPostBySlugLocal(slug: string): Promise<BlogPostDetail> {
   const filePath = path.join(blogDir, `${slug}.mdx`);
   const source = await fs.readFile(filePath, "utf8");
   const { data, content } = matter(source);
@@ -83,9 +83,47 @@ export async function getPostBySlug(slug: string) {
   });
 
   return {
+    source: "local",
     frontmatter: data as Frontmatter,
     content: mdx.content,
     headings,
     readingTime: readingTime(content).text
   };
+}
+
+export async function getAllPostsMeta(): Promise<BlogPostMeta[]> {
+  if (getContentSource() === "sanity" && isSanityEnabled()) {
+    const posts = await getPostsMetaFromSanity();
+    if (posts.length > 0) return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  }
+
+  return getAllPostsMetaLocal();
+}
+
+export async function getPostMeta(slug: string): Promise<BlogPostMeta> {
+  if (getContentSource() === "sanity" && isSanityEnabled()) {
+    const posts = await getPostsMetaFromSanity();
+    const post = posts.find((item) => item.slug === slug);
+    if (post) return post;
+  }
+
+  return getPostMetaLocal(slug);
+}
+
+export async function getAllPostSlugs() {
+  if (getContentSource() === "sanity" && isSanityEnabled()) {
+    const posts = await getPostsMetaFromSanity();
+    if (posts.length > 0) return posts.map((post) => post.slug);
+  }
+
+  return getAllPostSlugsLocal();
+}
+
+export async function getPostBySlug(slug: string): Promise<BlogPostDetail> {
+  if (getContentSource() === "sanity" && isSanityEnabled()) {
+    const post = await getPostBySlugFromSanity(slug);
+    if (post) return post;
+  }
+
+  return getPostBySlugLocal(slug);
 }

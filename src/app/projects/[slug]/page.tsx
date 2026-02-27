@@ -3,8 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Github, Globe, Play } from "lucide-react";
-import { projects } from "@/content/projects";
 import { absoluteUrl } from "@/lib/site";
+import { getProjectDataBySlug, getProjectsData } from "@/lib/content";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -12,12 +12,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { MermaidDiagram } from "@/components/projects/mermaid-diagram";
 
 export async function generateStaticParams() {
+  const projects = await getProjectsData();
   return projects.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const project = await getProjectDataBySlug(slug);
   if (!project) {
     return {};
   }
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const project = await getProjectDataBySlug(slug);
 
   if (!project) {
     notFound();
@@ -107,9 +108,13 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           <section>
             <h2 className="text-xl font-semibold">Gallery</h2>
             <div className="mt-4 grid gap-4 md:grid-cols-2">
-              {project.screenshots.map((shot) => (
-                <Image key={shot.src} src={shot.src} alt={shot.alt} width={1200} height={675} className="rounded-lg border" />
-              ))}
+              {project.screenshots.length > 0 ? (
+                project.screenshots.map((shot) => (
+                  <Image key={shot.src} src={shot.src} alt={shot.alt} width={1200} height={675} className="rounded-lg border" />
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground">No screenshots available yet.</p>
+              )}
             </div>
           </section>
         </div>

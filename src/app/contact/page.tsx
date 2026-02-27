@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { profile, socials } from "@/content/profile";
 import { absoluteUrl } from "@/lib/site";
+import { getSiteProfile } from "@/lib/content";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact/contact-form";
 
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
   }
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const profile = await getSiteProfile();
+
   return (
     <div className="container py-12">
       <h1 className="text-3xl font-bold tracking-tight">Contact</h1>
@@ -41,7 +43,7 @@ export default function ContactPage() {
             <p>Location: {profile.location}</p>
             <p>Timezone: {profile.timezone}</p>
             <div className="flex flex-wrap gap-3 pt-2">
-              {socials.map((social) => (
+              {profile.socials.map((social) => (
                 <Link key={social.label} href={social.href} target="_blank" rel="noreferrer" className="underline-offset-4 hover:underline">
                   {social.label}
                 </Link>

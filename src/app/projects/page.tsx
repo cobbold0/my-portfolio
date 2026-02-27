@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { projects } from "@/content/projects";
 import { absoluteUrl } from "@/lib/site";
+import { getProjectsData } from "@/lib/content";
 import { ProjectsClient } from "@/components/projects/projects-client";
 
 export const metadata: Metadata = {
@@ -14,7 +14,9 @@ export const metadata: Metadata = {
   }
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getProjectsData();
+
   return (
     <div className="container py-12">
       <h1 className="text-3xl font-bold tracking-tight">Projects</h1>

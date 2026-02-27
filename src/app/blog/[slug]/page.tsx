@@ -5,6 +5,7 @@ import { absoluteUrl } from "@/lib/site";
 import { getAllPostSlugs, getPostBySlug, getPostMeta } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import { TableOfContents } from "@/components/blog/toc";
+import { PortableTextRenderer } from "@/components/blog/portable-text";
 
 export async function generateStaticParams() {
   const slugs = await getAllPostSlugs();
@@ -59,7 +60,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <p className="mt-3 text-sm text-muted-foreground">
             {new Date(post.frontmatter.date).toLocaleDateString()} · {post.readingTime}
           </p>
-          <div className="prose prose-slate dark:prose-invert mt-8 max-w-none">{post.content}</div>
+          {post.source === "sanity" ? (
+            <div className="prose prose-slate dark:prose-invert mt-8 max-w-none">
+              <PortableTextRenderer value={post.body || []} />
+            </div>
+          ) : (
+            <div className="prose prose-slate dark:prose-invert mt-8 max-w-none">{post.content}</div>
+          )}
         </div>
         <div className="space-y-4">
           <TableOfContents items={post.headings} />

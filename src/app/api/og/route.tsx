@@ -1,34 +1,35 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
-import { profile } from "@/content/profile";
-import { projects } from "@/content/projects";
-import { getAllPostsMeta } from "@/lib/blog";
+import { getPostMeta } from "@/lib/blog";
+import { getProjectDataBySlug, getSiteProfile } from "@/lib/content";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const page = searchParams.get("page");
-  const post = searchParams.get("post");
+  const postSlug = searchParams.get("post");
 
+  const profile = await getSiteProfile();
   let title = `${profile.name} Portfolio`;
   let subtitle = profile.roleLine;
 
-  if (post) {
-    const posts = await getAllPostsMeta();
-    const found = posts.find((item) => item.slug === post);
-    if (found) {
-      title = found.title;
-      subtitle = found.summary;
+  if (postSlug) {
+    try {
+      const post = await getPostMeta(postSlug);
+      title = post.title;
+      subtitle = post.summary;
+    } catch {
+      // Fall back to defaults when slug is unknown.
     }
   } else if (page?.startsWith("project-")) {
     const slug = page.replace("project-", "");
-    const project = projects.find((item) => item.slug === slug);
+    const project = await getProjectDataBySlug(slug);
     if (project) {
       title = project.title;
       subtitle = project.summary;
     }
   } else if (page) {
     title = `${page[0].toUpperCase()}${page.slice(1)}`;
-    subtitle = "Backend • Frontend • Mobile";
+    subtitle = profile.roleLine;
   }
 
   return new ImageResponse(

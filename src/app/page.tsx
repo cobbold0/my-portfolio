@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
-import { profile, metrics } from "@/content/profile";
-import { projects } from "@/content/projects";
 import { skills } from "@/content/skills";
-import { testimonials } from "@/content/testimonials";
+import { getProjectsData, getSiteProfile, getTestimonialsData } from "@/lib/content";
 import { getAllPostsMeta } from "@/lib/blog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +12,9 @@ import { AnimatedSection } from "@/components/layout/animated-section";
 import { TestimonialsDialog } from "@/components/home/testimonials-dialog";
 
 export default async function HomePage() {
+  const profile = await getSiteProfile();
+  const projects = await getProjectsData();
+  const testimonials = await getTestimonialsData();
   const featured = projects.filter((project) => project.featured).slice(0, 3);
   const posts = (await getAllPostsMeta()).slice(0, 3);
 
@@ -36,7 +37,7 @@ export default async function HomePage() {
                 <Link href="/contact">Contact</Link>
               </Button>
               <Button asChild variant="secondary">
-                <Link href="/resume">
+                <Link href={profile.resumeUrl || "/resume"}>
                   Download CV <Download className="h-4 w-4" />
                 </Link>
               </Button>
@@ -72,7 +73,7 @@ export default async function HomePage() {
 
       <section className="border-y bg-muted/30">
         <div className="container grid gap-6 py-8 md:grid-cols-3">
-          {metrics.map((metric) => (
+          {profile.metrics.map((metric) => (
             <div key={metric.label}>
               <p className="text-3xl font-semibold">{metric.value}</p>
               <p className="text-sm text-muted-foreground">{metric.label}</p>
