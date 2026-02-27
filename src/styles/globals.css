@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 20% 98%;
+  --foreground: 222.2 47.4% 11.2%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --primary: 215 65% 33%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 22% 92%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 16% 93%;
+  --muted-foreground: 215 16% 42%;
+  --accent: 187 45% 86%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --border: 210 20% 88%;
+  --input: 210 20% 88%;
+  --ring: 215 65% 33%;
+  --radius: 0.9rem;
+}
+
+.dark {
+  --background: 222 47% 7%;
+  --foreground: 210 40% 96%;
+  --card: 222 47% 9%;
+  --card-foreground: 210 40% 96%;
+  --primary: 191 77% 43%;
+  --primary-foreground: 220 45% 7%;
+  --secondary: 217 33% 16%;
+  --secondary-foreground: 210 40% 96%;
+  --muted: 217 32% 16%;
+  --muted-foreground: 215 20% 70%;
+  --accent: 200 66% 20%;
+  --accent-foreground: 210 40% 96%;
+  --border: 217 32% 23%;
+  --input: 217 32% 23%;
+  --ring: 191 77% 43%;
+}
+
+* {
+  @apply border-border;
+}
+
+html,
+body {
+  @apply bg-background text-foreground antialiased;
+}
+
+body {
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+.hero-grid {
+  background-image: radial-gradient(circle at 1px 1px, hsl(var(--border)) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+.prose pre {
+  @apply rounded-lg border border-border;
+}
+
+.prose code::before,
+.prose code::after {
+  content: "";
+}
+
+.hljs {
+  color: #e2e8f0;
+  background: #0f172a;
+}

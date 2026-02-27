@@ -1,0 +1,31 @@
+---
+title: "Scaling Feature Flags Without Slowing Delivery"
+date: "2026-01-12"
+tags:
+  - backend
+  - architecture
+summary: "A practical blueprint for governing feature flags across growing teams."
+coverImage: "/projects/governance-1.svg"
+---
+
+## Context
+
+As flag counts grow, teams need ownership boundaries and expiration policies.
+
+## Practices that worked
+
+- Define flag classes: release, ops, experiment.
+- Require owner and cleanup date.
+- Alert on stale flags in CI.
+
+## Outcome
+
+Governance cut rollback incidents while keeping release velocity steady.
+
+```ts
+export function assertFlag(flag: { owner?: string; expiresAt?: string }) {
+  if (!flag.owner || !flag.expiresAt) {
+    throw new Error("Invalid flag metadata");
+  }
+}
+```

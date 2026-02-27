@@ -1,0 +1,23 @@
+---
+title: "Designing Offline Sync for Mobile Field Apps"
+date: "2025-08-19"
+tags:
+  - mobile
+  - react-native
+summary: "How to model offline queues, retries, and conflict resolution for unstable networks."
+coverImage: "/projects/mobile-1.svg"
+---
+
+## Constraints
+
+Field teams cannot depend on stable connectivity.
+
+## Sync strategy
+
+- Local-first writes with durable queue.
+- Retry with exponential backoff.
+- Conflict merge based on last-write plus domain-specific rules.
+
+## Monitoring
+
+Track queue depth and failed replay rate as first-class reliability metrics.

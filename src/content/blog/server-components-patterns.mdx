@@ -1,0 +1,23 @@
+---
+title: "Server Components Patterns for Product Teams"
+date: "2025-11-03"
+tags:
+  - frontend
+  - nextjs
+summary: "Patterns for deciding what stays server-side versus interactive client islands."
+coverImage: "/projects/commerce-1.svg"
+---
+
+## Why this matters
+
+Server Components reduce shipped JavaScript and simplify data-fetching boundaries.
+
+## A decision rule
+
+1. Start with server rendering by default.
+2. Promote to client only when stateful interactivity is required.
+3. Keep client islands narrow.
+
+### Example split
+
+Use server-rendered product grids and lazy client filters to preserve performance.
