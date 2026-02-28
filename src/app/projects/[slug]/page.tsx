@@ -45,8 +45,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="container py-12">
-      <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground">
-        ← Back to projects
+      <Link
+        href="/projects"
+        className="text-sm text-muted-foreground hover:text-foreground"
+        data-analytics-event="navigation_click"
+        data-analytics-source="project_detail"
+        data-analytics-target="/projects"
+        data-analytics-label="back_to_projects"
+        data-analytics-nav-context="project_detail:back_to_projects"
+      >
+        &larr; Back to projects
       </Link>
       <h1 className="mt-4 text-3xl font-bold tracking-tight">{project.title}</h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">{project.summary}</p>
@@ -62,21 +70,48 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       <div className="mt-6 flex flex-wrap gap-3">
         {project.links.github ? (
           <Button asChild variant="outline" size="sm">
-            <a href={project.links.github} target="_blank" rel="noreferrer">
+            <a
+              href={project.links.github}
+              target="_blank"
+              rel="noreferrer"
+              data-analytics-event="outbound_click"
+              data-analytics-source="project_detail"
+              data-analytics-label="github"
+              data-analytics-target={project.links.github}
+              data-analytics-slug={project.slug}
+            >
               <Github className="mr-2 h-4 w-4" /> GitHub
             </a>
           </Button>
         ) : null}
         {project.links.live ? (
           <Button asChild size="sm">
-            <a href={project.links.live} target="_blank" rel="noreferrer">
+            <a
+              href={project.links.live}
+              target="_blank"
+              rel="noreferrer"
+              data-analytics-event="outbound_click"
+              data-analytics-source="project_detail"
+              data-analytics-label="live"
+              data-analytics-target={project.links.live}
+              data-analytics-slug={project.slug}
+            >
               <Globe className="mr-2 h-4 w-4" /> Live
             </a>
           </Button>
         ) : null}
         {project.links.playStore ? (
           <Button asChild variant="secondary" size="sm">
-            <a href={project.links.playStore} target="_blank" rel="noreferrer">
+            <a
+              href={project.links.playStore}
+              target="_blank"
+              rel="noreferrer"
+              data-analytics-event="outbound_click"
+              data-analytics-source="project_detail"
+              data-analytics-label="play_store"
+              data-analytics-target={project.links.playStore}
+              data-analytics-slug={project.slug}
+            >
               <Play className="mr-2 h-4 w-4" /> Play Store
             </a>
           </Button>
@@ -128,7 +163,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   <AccordionContent>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       {project.responsibilities.map((item) => (
-                        <li key={item}>• {item}</li>
+                        <li key={item}>- {item}</li>
                       ))}
                     </ul>
                   </AccordionContent>
@@ -138,7 +173,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   <AccordionContent>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       {project.impactMetrics.map((item) => (
-                        <li key={item}>• {item}</li>
+                        <li key={item}>- {item}</li>
                       ))}
                     </ul>
                   </AccordionContent>

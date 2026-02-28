@@ -53,6 +53,34 @@ export default defineType({
       ]
     }),
     defineField({
+      name: "linkedinEndorsements",
+      title: "LinkedIn Endorsements",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({ name: "skill", type: "string", validation: (Rule) => Rule.required() }),
+            defineField({ name: "endorsementCount", type: "number", validation: (Rule) => Rule.required().min(0) }),
+            defineField({
+              name: "topEndorsers",
+              type: "array",
+              of: [defineArrayMember({ type: "string" })],
+              validation: (Rule) => Rule.required().min(1),
+              description: "Add at least one endorser name."
+            }),
+            defineField({
+              name: "proofImage",
+              type: "image",
+              options: { hotspot: true },
+              description: "Optional screenshot or proof image."
+            }),
+            defineField({ name: "proofUrl", type: "url", description: "Optional link to external proof." })
+          ]
+        })
+      ]
+    }),
+    defineField({
       name: "defaultSeo",
       type: "object",
       fields: [

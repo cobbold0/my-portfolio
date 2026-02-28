@@ -44,7 +44,7 @@ export function BlogClient({ posts }: { posts: BlogPostMeta[] }) {
       </div>
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {filtered.map((post) => (
-          <BlogCard key={post.slug} post={post} />
+          <BlogCard key={post.slug} post={post} sourceSurface="blog_list" />
         ))}
       </div>
     </div>

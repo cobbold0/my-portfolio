@@ -3,12 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { trackEvent } from "@/lib/analytics";
+import { setNavigationContext, trackEvent } from "@/lib/analytics";
 import type { Project } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({ project, sourceSurface = "unknown" }: { project: Project; sourceSurface?: string }) {
   return (
     <Card className="h-full overflow-hidden">
       <Image
@@ -37,7 +37,10 @@ export function ProjectCard({ project }: { project: Project }) {
         <Link
           href={`/projects/${project.slug}`}
           className="inline-flex items-center gap-1 text-sm font-medium text-primary"
-          onClick={() => trackEvent({ name: "click_project", properties: { slug: project.slug } })}
+          onClick={() => {
+            setNavigationContext(`${sourceSurface}:project_card:${project.slug}`);
+            trackEvent({ name: "click_project", properties: { slug: project.slug, source: sourceSurface } });
+          }}
         >
           View case study <ArrowUpRight className="h-4 w-4" />
         </Link>

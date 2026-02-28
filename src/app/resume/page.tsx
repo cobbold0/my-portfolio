@@ -29,7 +29,14 @@ export default async function ResumePage() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-3xl font-bold tracking-tight">Resume</h1>
         <Button asChild>
-          <Link href={profile.resumeUrl || "/resume.pdf"} target="_blank">
+          <Link
+            href={profile.resumeUrl || "/resume.pdf"}
+            target="_blank"
+            data-analytics-event="download_cv"
+            data-analytics-source="resume_page"
+            data-analytics-target={profile.resumeUrl || "/resume.pdf"}
+            data-analytics-label="download_pdf"
+          >
             <Download className="mr-2 h-4 w-4" /> Download PDF
           </Link>
         </Button>

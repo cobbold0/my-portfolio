@@ -30,6 +30,7 @@ export async function getSiteProfile(): Promise<SiteSettingsData> {
     email: local.profile.email,
     socials: local.socials,
     metrics: local.metrics,
+    linkedinEndorsements: local.linkedinEndorsements,
     resumeUrl: "/resume.pdf",
     seo: undefined
   };

@@ -12,6 +12,13 @@ export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
   socials[]{label, href},
   primaryCtas,
   metrics[]{label, value},
+  linkedinEndorsements[]{
+    skill,
+    endorsementCount,
+    topEndorsers,
+    "proofImage": proofImage.asset->url,
+    proofUrl
+  },
   defaultSeo{title, description, ogImage},
   "resumeFileUrl": resumeFile.asset->url,
   resumeUrl
@@ -61,7 +68,8 @@ export const postsQuery = groq`*[_type == "post"] | order(publishedAt desc){
   tags,
   coverImage,
   body,
-  readingTime
+  readingTime,
+  shareOnLinkedIn
 }`;
 
 export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]{
@@ -72,7 +80,8 @@ export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][
   tags,
   coverImage,
   body,
-  readingTime
+  readingTime,
+  shareOnLinkedIn
 }`;
 
 export const experienceQuery = groq`*[_type == "experience"] | order(startDate desc){

@@ -1,10 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { BlogPostMeta } from "@/lib/blog";
+import { setNavigationContext, trackEvent } from "@/lib/analytics";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function BlogCard({ post }: { post: BlogPostMeta }) {
+export function BlogCard({ post, sourceSurface = "unknown" }: { post: BlogPostMeta; sourceSurface?: string }) {
   return (
     <Card className="h-full overflow-hidden">
       <Image
@@ -23,7 +26,14 @@ export function BlogCard({ post }: { post: BlogPostMeta }) {
           ))}
         </div>
         <CardTitle className="text-lg">
-          <Link href={`/blog/${post.slug}`} className="hover:underline">
+          <Link
+            href={`/blog/${post.slug}`}
+            className="hover:underline"
+            onClick={() => {
+              setNavigationContext(`${sourceSurface}:blog_card:${post.slug}`);
+              trackEvent({ name: "click_blog", properties: { slug: post.slug, source: sourceSurface } });
+            }}
+          >
             {post.title}
           </Link>
         </CardTitle>

@@ -54,7 +54,7 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {filtered.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
+          <ProjectCard key={project.slug} project={project} sourceSurface="projects_list" />
         ))}
       </div>
     </div>

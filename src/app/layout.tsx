@@ -6,8 +6,9 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { PageViewTracker } from "@/components/layout/page-view-tracker";
+import { AnalyticsClickTracker } from "@/components/layout/analytics-click-tracker";
 import { PwaRegister } from "@/components/layout/pwa-register";
-import { VercelAnalytics } from "@/components/layout/vercel-analytics";
+import { FirebaseAnalytics } from "@/components/layout/firebase-analytics";
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await getSiteProfile();
@@ -58,10 +59,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <PwaRegister />
           <PageViewTracker />
+          <AnalyticsClickTracker />
           <Navbar />
           <main>{children}</main>
           <Footer />
-          <VercelAnalytics />
+          <FirebaseAnalytics />
         </ThemeProvider>
       </body>
     </html>

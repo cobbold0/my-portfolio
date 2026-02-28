@@ -18,6 +18,7 @@ type Frontmatter = {
   tags: string[];
   summary: string;
   coverImage: string;
+  shareOnLinkedIn?: boolean;
 };
 
 const blogDir = path.join(process.cwd(), "src", "content", "blog");
@@ -37,7 +38,8 @@ async function getPostMetaLocal(slug: string): Promise<BlogPostMeta> {
     ...fm,
     slug,
     date: fm.date,
-    readingTime: readingTime(content).text
+    readingTime: readingTime(content).text,
+    shareOnLinkedIn: Boolean(fm.shareOnLinkedIn)
   };
 }
 
@@ -87,7 +89,8 @@ async function getPostBySlugLocal(slug: string): Promise<BlogPostDetail> {
     frontmatter: data as Frontmatter,
     content: mdx.content,
     headings,
-    readingTime: readingTime(content).text
+    readingTime: readingTime(content).text,
+    shareOnLinkedIn: Boolean((data as Frontmatter).shareOnLinkedIn)
   };
 }
 

@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
 import { getAllPostSlugs, getPostBySlug, getPostMeta } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { TableOfContents } from "@/components/blog/toc";
 import { PortableTextRenderer } from "@/components/blog/portable-text";
 
@@ -42,10 +43,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
+  const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(absoluteUrl(`/blog/${slug}`))}`;
+
   return (
     <div className="container py-12">
-      <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground">
-        ← Back to blog
+      <Link
+        href="/blog"
+        className="text-sm text-muted-foreground hover:text-foreground"
+        data-analytics-event="navigation_click"
+        data-analytics-source="blog_detail"
+        data-analytics-target="/blog"
+        data-analytics-label="back_to_blog"
+        data-analytics-nav-context="blog_detail:back_to_blog"
+      >
+        &larr; Back to blog
       </Link>
 
       <article className="mt-6 grid gap-10 lg:grid-cols-[2fr_1fr]">
@@ -66,8 +77,26 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             ))}
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
-            {new Date(post.frontmatter.date).toLocaleDateString()} · {post.readingTime}
+            {new Date(post.frontmatter.date).toLocaleDateString()} - {post.readingTime}
           </p>
+          {post.shareOnLinkedIn ? (
+            <div className="mt-4">
+              <Button asChild variant="outline">
+                <a
+                  href={shareUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-analytics-event="outbound_click"
+                  data-analytics-source="blog_detail"
+                  data-analytics-label="share_on_linkedin"
+                  data-analytics-target={shareUrl}
+                  data-analytics-slug={slug}
+                >
+                  Share on LinkedIn
+                </a>
+              </Button>
+            </div>
+          ) : null}
           {post.source === "sanity" ? (
             <div className="prose prose-slate dark:prose-invert mt-8 max-w-none">
               <PortableTextRenderer value={post.body || []} />

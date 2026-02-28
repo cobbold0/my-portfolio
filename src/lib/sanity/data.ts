@@ -1,5 +1,5 @@
 import readingTime from "reading-time";
-import { profile as localProfile, socials as localSocials, metrics as localMetrics } from "@/content/profile";
+import { profile as localProfile, socials as localSocials, metrics as localMetrics, linkedinEndorsements as localLinkedInEndorsements } from "@/content/profile";
 import { projects as localProjects } from "@/content/projects";
 import { experience as localExperience } from "@/content/experience";
 import { testimonials as localTestimonials } from "@/content/testimonials";
@@ -59,6 +59,7 @@ type SanityPost = {
   coverImage?: SanityImage;
   body?: unknown[];
   readingTime?: string;
+  shareOnLinkedIn?: boolean;
 };
 
 function mapSanityProject(project: SanityProject): Project {
@@ -142,6 +143,7 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
     phone?: string;
     socials?: SiteSettingsData["socials"];
     metrics?: SiteSettingsData["metrics"];
+    linkedinEndorsements?: SiteSettingsData["linkedinEndorsements"];
     defaultSeo?: { title?: string; description?: string; ogImage?: SanityImage };
     primaryCtas?: { resumeUrl?: string };
     resumeFileUrl?: string;
@@ -160,6 +162,7 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
     phone: data.phone,
     socials: data.socials?.length ? data.socials : localSocials,
     metrics: data.metrics?.length ? data.metrics : localMetrics,
+    linkedinEndorsements: data.linkedinEndorsements?.length ? data.linkedinEndorsements : localLinkedInEndorsements,
     resumeUrl: data.resumeFileUrl || data.resumeUrl || data.primaryCtas?.resumeUrl || "/resume.pdf",
     seo: {
       title: data.defaultSeo?.title,
@@ -198,7 +201,8 @@ export async function getPostsMetaFromSanity(): Promise<BlogPostMeta[]> {
       tags: post.tags || [],
       summary: post.summary,
       coverImage: urlForImage(post.coverImage) || "/projects/placeholder.svg",
-      readingTime: post.readingTime || readingTime(plainText).text || "1 min read"
+      readingTime: post.readingTime || readingTime(plainText).text || "1 min read",
+      shareOnLinkedIn: Boolean(post.shareOnLinkedIn)
     };
   });
 }
@@ -221,6 +225,7 @@ export async function getPostBySlugFromSanity(slug: string): Promise<BlogPostDet
       coverImage: urlForImage(post.coverImage) || "/projects/placeholder.svg"
     },
     readingTime: post.readingTime || readingTime(text).text || "1 min read",
+    shareOnLinkedIn: Boolean(post.shareOnLinkedIn),
     headings: portableTextHeadings(post.body || []),
     body: post.body || []
   };
@@ -270,6 +275,7 @@ export function getLocalDefaults() {
     profile: localProfile,
     socials: localSocials,
     metrics: localMetrics,
+    linkedinEndorsements: localLinkedInEndorsements,
     projects: localProjects,
     experience: localExperience,
     testimonials: localTestimonials

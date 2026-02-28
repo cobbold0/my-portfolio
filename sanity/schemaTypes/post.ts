@@ -17,6 +17,12 @@ export default defineType({
     defineField({ name: "tags", type: "array", of: [defineArrayMember({ type: "string" })] }),
     defineField({ name: "coverImage", type: "image", options: { hotspot: true } }),
     defineField({
+      name: "shareOnLinkedIn",
+      type: "boolean",
+      initialValue: false,
+      description: "If enabled, show a manual LinkedIn share button on the blog post page."
+    }),
+    defineField({
       name: "body",
       type: "array",
       of: [

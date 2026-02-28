@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Github, Linkedin, Menu, Store, Twitter } from "lucide-react";
+import { setNavigationContext, trackEvent } from "@/lib/analytics";
 import type { SocialLink } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -34,7 +35,18 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
 
         <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="text-sm text-muted-foreground transition hover:text-foreground">
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm text-muted-foreground transition hover:text-foreground"
+              onClick={() => {
+                setNavigationContext(`navbar_desktop:${item.href}`);
+                trackEvent({
+                  name: "navigation_click",
+                  properties: { source: "navbar_desktop", target: item.href, label: item.label }
+                });
+              }}
+            >
               {item.label}
             </Link>
           ))}
@@ -48,7 +60,18 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
                 <Tooltip key={social.label}>
                   <TooltipTrigger asChild>
                     <Button asChild size="icon" variant="ghost">
-                      <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label}>
+                      <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={social.label}
+                        onClick={() => {
+                          trackEvent({
+                            name: "social_click",
+                            properties: { source: "navbar_desktop", label: social.label, target: social.href }
+                          });
+                        }}
+                      >
                         {Icon ? <Icon className="h-4 w-4" /> : social.label}
                       </a>
                     </Button>
@@ -71,7 +94,18 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
             </SheetTrigger>
             <SheetContent className="space-y-4 p-6">
               {navItems.map((item) => (
-                <Link key={item.href} href={item.href} className="block text-sm font-medium">
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="block text-sm font-medium"
+                  onClick={() => {
+                    setNavigationContext(`navbar_mobile:${item.href}`);
+                    trackEvent({
+                      name: "navigation_click",
+                      properties: { source: "navbar_mobile", target: item.href, label: item.label }
+                    });
+                  }}
+                >
                   {item.label}
                 </Link>
               ))}

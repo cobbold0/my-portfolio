@@ -12,6 +12,13 @@ export type SiteSettingsData = {
   phone?: string;
   socials: SocialLink[];
   metrics: Metric[];
+  linkedinEndorsements: {
+    skill: string;
+    endorsementCount: number;
+    topEndorsers?: string[];
+    proofImage?: string;
+    proofUrl?: string;
+  }[];
   resumeUrl: string;
   seo?: {
     title?: string;
@@ -45,6 +52,7 @@ export type BlogPostMeta = {
   summary: string;
   coverImage: string;
   readingTime: string;
+  shareOnLinkedIn?: boolean;
 };
 
 export type BlogPostDetail = {
@@ -58,6 +66,7 @@ export type BlogPostDetail = {
   readingTime: string;
   headings: { text: string; id: string }[];
   source: "sanity" | "local";
+  shareOnLinkedIn?: boolean;
   content?: ReactNode;
   body?: unknown[];
 };

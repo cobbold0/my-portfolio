@@ -10,7 +10,16 @@ export async function Footer() {
         <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
         <div className="flex items-center gap-4">
           {profile.socials.map((social) => (
-            <Link key={social.label} href={social.href} target="_blank" rel="noreferrer">
+            <Link
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noreferrer"
+              data-analytics-event="social_click"
+              data-analytics-source="footer"
+              data-analytics-label={social.label}
+              data-analytics-target={social.href}
+            >
               {social.label}
             </Link>
           ))}

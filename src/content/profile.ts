@@ -14,7 +14,7 @@ export const profile = {
 
 export const socials: SocialLink[] = [
   { label: "GitHub", href: "https://github.com" },
-  { label: "LinkedIn", href: "https://linkedin.com" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/augustinecobbold" },
   { label: "X", href: "https://x.com" }
 ];
 
@@ -22,4 +22,22 @@ export const metrics: Metric[] = [
   { label: "Apps shipped", value: "18+" },
   { label: "APIs built", value: "40+" },
   { label: "Crash rate reduction", value: "-37%" }
+];
+
+export const linkedinEndorsements = [
+  {
+    skill: "TypeScript",
+    endorsementCount: 42,
+    topEndorsers: ["Emmanuel Asamoah", "Nana Yaw Mensah"]
+  },
+  {
+    skill: "Node.js",
+    endorsementCount: 37,
+    topEndorsers: ["Abena Ofori", "Kofi Owusu"]
+  },
+  {
+    skill: "React",
+    endorsementCount: 35,
+    topEndorsers: ["Kwame Boateng", "Esi Nyarko"]
+  }
 ];
