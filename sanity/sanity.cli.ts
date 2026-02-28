@@ -1,5 +1,11 @@
 import { defineCliConfig } from "sanity/cli";
-import { projectId, dataset } from "./env";
+import { config as loadEnv } from "dotenv";
+
+loadEnv({ path: ".env.local" });
+loadEnv({ path: ".env" });
+
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "";
+const dataset = process.env.SANITY_STUDIO_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 export default defineCliConfig({
   api: {
