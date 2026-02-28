@@ -21,7 +21,12 @@ export const apiVersion =
   readEnv("SANITY_STUDIO_API_VERSION", "NEXT_PUBLIC_SANITY_API_VERSION") || "2025-01-01";
 
 if (!projectId) {
-  console.warn(
-    "Missing SANITY_STUDIO_PROJECT_ID (or NEXT_PUBLIC_SANITY_PROJECT_ID). Sanity Studio will not connect until configured."
-  );
+  const isServer = typeof window === "undefined";
+  const isDev = (nodeEnv?.NODE_ENV || "development") !== "production";
+
+  if (isServer && isDev) {
+    console.warn(
+      "Missing SANITY_STUDIO_PROJECT_ID (or NEXT_PUBLIC_SANITY_PROJECT_ID). Sanity Studio will not connect until configured."
+    );
+  }
 }
