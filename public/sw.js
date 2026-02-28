@@ -1,4 +1,4 @@
-const CACHE_NAME = "portfolio-cache-v1";
+const CACHE_NAME = "portfolio-cache-v2";
 const STATIC_ASSETS = ["/", "/manifest.webmanifest", "/icons/icon.svg", "/icons/maskable-icon.svg"];
 
 self.addEventListener("install", (event) => {
@@ -20,6 +20,12 @@ self.addEventListener("fetch", (event) => {
 
   // Only cache same-origin requests for this app shell strategy.
   if (url.origin !== self.location.origin) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // Never cache Next.js build artifacts or Studio routes to avoid stale chunk/config issues.
+  if (url.pathname.startsWith("/_next/") || url.pathname.startsWith("/studio")) {
     event.respondWith(fetch(event.request));
     return;
   }

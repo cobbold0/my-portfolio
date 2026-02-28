@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Linkedin, Menu, Store, Twitter } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Github, Instagram, Linkedin, Menu, Store, Twitter } from "lucide-react";
 import { setNavigationContext, trackEvent } from "@/lib/analytics";
 import type { SocialLink } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { lockStudioAction } from "@/app/studio/actions";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -18,11 +20,15 @@ const navItems = [
 ];
 
 export function NavbarClient({ name, socials }: { name: string; socials: SocialLink[] }) {
+  const pathname = usePathname();
+  const isStudioRoute = pathname.startsWith("/studio");
+
   const iconMap = {
     GitHub: Github,
     LinkedIn: Linkedin,
     X: Twitter,
     Twitter,
+    Instagram: Instagram,
     "Play Store": Store
   };
 
@@ -50,10 +56,24 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
               {item.label}
             </Link>
           ))}
+          {isStudioRoute ? (
+            <form action={lockStudioAction}>
+              <button type="submit" className="text-sm text-muted-foreground transition hover:text-foreground">
+                Lock Studio
+              </button>
+            </form>
+          ) : null}
         </nav>
 
         <TooltipProvider>
           <div className="hidden items-center gap-2 md:flex">
+            {isStudioRoute ? (
+              <form action={lockStudioAction}>
+                <Button type="submit" size="sm" variant="outline">
+                  Lock Studio
+                </Button>
+              </form>
+            ) : null}
             {socials.map((social) => {
               const Icon = iconMap[social.label as keyof typeof iconMap];
               return (
@@ -85,6 +105,13 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
         </TooltipProvider>
 
         <div className="flex items-center gap-1 md:hidden">
+          {isStudioRoute ? (
+            <form action={lockStudioAction}>
+              <Button type="submit" size="sm" variant="outline">
+                Lock
+              </Button>
+            </form>
+          ) : null}
           <ThemeToggle />
           <Sheet>
             <SheetTrigger asChild>
@@ -109,6 +136,13 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
                   {item.label}
                 </Link>
               ))}
+              {isStudioRoute ? (
+                <form action={lockStudioAction}>
+                  <button type="submit" className="block text-sm font-medium">
+                    Lock Studio
+                  </button>
+                </form>
+              ) : null}
             </SheetContent>
           </Sheet>
         </div>

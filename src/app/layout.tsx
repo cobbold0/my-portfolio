@@ -9,6 +9,7 @@ import { PageViewTracker } from "@/components/layout/page-view-tracker";
 import { AnalyticsClickTracker } from "@/components/layout/analytics-click-tracker";
 import { PwaRegister } from "@/components/layout/pwa-register";
 import { FirebaseAnalytics } from "@/components/layout/firebase-analytics";
+import { DevToolsGuard } from "@/components/layout/devtools-guard";
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await getSiteProfile();
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen font-sans">
         <ThemeProvider>
+          <DevToolsGuard />
           <PwaRegister />
           <PageViewTracker />
           <AnalyticsClickTracker />
