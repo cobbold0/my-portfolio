@@ -56,6 +56,16 @@ export function GitHubProfileCard({ profile }: { profile: GitHubProfile }) {
       .slice(0, 3);
   }, [profile.recentCommits, selectedYear]);
 
+  const commitDateFormatter = useMemo(
+    () =>
+      new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC"
+      }),
+    []
+  );
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center gap-4 space-y-0">
@@ -159,7 +169,7 @@ export function GitHubProfileCard({ profile }: { profile: GitHubProfile }) {
                   </div>
                   <p className="mt-1">{commit.message}</p>
                   <p className="mt-1 text-xs">
-                    {new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(commit.committedAt))}{" "}
+                    {commitDateFormatter.format(new Date(commit.committedAt))}{" "}
                     <Link href={commit.commitUrl} target="_blank" rel="noreferrer" className="text-primary hover:underline">
                       View commit
                     </Link>
