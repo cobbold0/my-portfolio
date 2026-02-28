@@ -1,11 +1,20 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import config from "../../../../sanity/sanity.config";
 
-const NextStudio = dynamic(() => import("next-sanity/studio").then((mod) => mod.NextStudio), {
-  ssr: false
-});
+const StudioWithConfig = dynamic(
+  async () => {
+    const [{ NextStudio }, { default: config }] = await Promise.all([
+      import("next-sanity/studio"),
+      import("../../../../sanity/sanity.config")
+    ]);
+
+    return function StudioPageInner() {
+      return <NextStudio config={config} />;
+    };
+  },
+  { ssr: false }
+);
 
 export default function StudioPage() {
   if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
@@ -20,5 +29,5 @@ export default function StudioPage() {
     );
   }
 
-  return <NextStudio config={config} />;
+  return <StudioWithConfig />;
 }
