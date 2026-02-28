@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Download } from "lucide-react";
-import { education, certifications, experience } from "@/content/experience";
 import { skills } from "@/content/skills";
 import { absoluteUrl } from "@/lib/site";
+import { getEducationAndCertifications, getExperienceData, getSiteProfile } from "@/lib/content";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,13 +19,24 @@ export const metadata: Metadata = {
   }
 };
 
-export default function ResumePage() {
+export default async function ResumePage() {
+  const profile = await getSiteProfile();
+  const experience = await getExperienceData();
+  const { education, certifications } = getEducationAndCertifications();
+
   return (
     <div className="container py-12">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-3xl font-bold tracking-tight">Resume</h1>
         <Button asChild>
-          <Link href="/resume.pdf" target="_blank">
+          <Link
+            href={profile.resumeUrl || "/resume.pdf"}
+            target="_blank"
+            data-analytics-event="download_cv"
+            data-analytics-source="resume_page"
+            data-analytics-target={profile.resumeUrl || "/resume.pdf"}
+            data-analytics-label="download_pdf"
+          >
             <Download className="mr-2 h-4 w-4" /> Download PDF
           </Link>
         </Button>
@@ -37,8 +48,12 @@ export default function ResumePage() {
           {experience.map((item) => (
             <Card key={`${item.company}-${item.role}`}>
               <CardHeader>
-                <CardTitle className="text-lg">{item.role} · {item.company}</CardTitle>
-                <p className="text-sm text-muted-foreground">{item.location} · {item.start} to {item.end}</p>
+                <CardTitle className="text-lg">
+                  {item.role} · {item.company}
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  {item.location} · {item.start} to {item.end}
+                </p>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2 text-sm text-muted-foreground">
