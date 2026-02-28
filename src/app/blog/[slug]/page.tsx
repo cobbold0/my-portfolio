@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -49,7 +50,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <article className="mt-6 grid gap-10 lg:grid-cols-[2fr_1fr]">
         <div>
-          <h1 className="text-4xl font-bold tracking-tight">{post.frontmatter.title}</h1>
+          <Image
+            src={post.frontmatter.coverImage || "/projects/placeholder.svg"}
+            alt={post.frontmatter.title}
+            width={1200}
+            height={675}
+            className="h-auto w-full rounded-xl border object-cover"
+          />
+          <h1 className="mt-6 text-4xl font-bold tracking-tight">{post.frontmatter.title}</h1>
           <div className="mt-4 flex flex-wrap gap-2">
             {post.frontmatter.tags.map((tag) => (
               <Badge key={tag} variant="secondary">

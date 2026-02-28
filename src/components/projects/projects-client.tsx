@@ -6,29 +6,25 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectCard } from "@/components/projects/project-card";
 
-type Sort = "recent" | "featured";
+type Visibility = "all" | "featured";
 
 export function ProjectsClient({ projects }: { projects: Project[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<"All" | ProjectCategory>("All");
-  const [sort, setSort] = useState<Sort>("recent");
+  const [visibility, setVisibility] = useState<Visibility>("all");
 
   const filtered = useMemo(() => {
     return projects
       .filter((project) => {
         const matchesCategory = category === "All" || project.category === category;
+        const matchesVisibility = visibility === "all" || project.featured;
         const stack = project.techStack.join(" ").toLowerCase();
         const matchesQuery =
           project.title.toLowerCase().includes(query.toLowerCase()) || stack.includes(query.toLowerCase());
-        return matchesCategory && matchesQuery;
+        return matchesCategory && matchesVisibility && matchesQuery;
       })
-      .sort((a, b) => {
-        if (sort === "featured") {
-          return Number(b.featured) - Number(a.featured) || b.year - a.year;
-        }
-        return b.year - a.year;
-      });
-  }, [projects, query, category, sort]);
+      .sort((a, b) => b.year - a.year);
+  }, [projects, query, category, visibility]);
 
   return (
     <div className="space-y-6">
@@ -39,9 +35,9 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <Tabs value={sort} onValueChange={(value) => setSort(value as Sort)}>
+        <Tabs value={visibility} onValueChange={(value) => setVisibility(value as Visibility)}>
           <TabsList>
-            <TabsTrigger value="recent">Most recent</TabsTrigger>
+            <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="featured">Featured</TabsTrigger>
           </TabsList>
         </Tabs>

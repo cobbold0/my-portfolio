@@ -1,20 +1,51 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 export function MermaidDiagram({ chart }: { chart: string }) {
-  const lines = chart
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .slice(1);
+  const idRef = useRef(`mermaid-${Math.random().toString(36).slice(2)}`);
+  const [svg, setSvg] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function render() {
+      try {
+        const mermaidModule = await import("mermaid");
+        const mermaid = mermaidModule.default;
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: "strict",
+          theme: "default"
+        });
+
+        const { svg: rendered } = await mermaid.render(idRef.current, chart);
+        if (!cancelled) {
+          setSvg(rendered);
+          setError("");
+        }
+      } catch {
+        if (!cancelled) {
+          setError("Failed to render architecture diagram.");
+          setSvg("");
+        }
+      }
+    }
+
+    render();
+    return () => {
+      cancelled = true;
+    };
+  }, [chart]);
 
   return (
     <div className="overflow-x-auto rounded-lg border bg-muted/40 p-4">
-      <svg viewBox="0 0 760 360" role="img" aria-label="Architecture diagram" className="h-auto min-w-[640px]">
-        <rect x="10" y="10" width="740" height="340" rx="14" fill="hsl(var(--background))" stroke="hsl(var(--border))" />
-        {lines.map((line, index) => (
-          <text key={line + index} x="36" y={54 + index * 24} fontSize="13" fill="hsl(var(--foreground))" fontFamily="monospace">
-            {line}
-          </text>
-        ))}
-      </svg>
+      {error ? (
+        <p className="text-sm text-muted-foreground">{error}</p>
+      ) : (
+        <div className="min-w-[640px]" aria-label="Architecture diagram" dangerouslySetInnerHTML={{ __html: svg }} />
+      )}
     </div>
   );
 }

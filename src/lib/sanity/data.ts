@@ -67,7 +67,10 @@ function mapSanityProject(project: SanityProject): Project {
   const cover = urlForImage(project.coverImage);
   const gallery = (project.galleryImages || [])
     .map((image, index) => ({ src: urlForImage(image), alt: `${project.title} screenshot ${index + 1}` }))
-    .filter((item): item is { src: string; alt: string } => Boolean(item.src));
+    .filter((item): item is { src: string; alt: string } => Boolean(item.src));  const screenshots = [
+    ...(cover ? [{ src: cover, alt: `${project.title} cover` }] : []),
+    ...gallery
+  ];
 
   return {
     slug: project.slug,
@@ -81,10 +84,7 @@ function mapSanityProject(project: SanityProject): Project {
     category,
     featured: Boolean(project.featured),
     year: project.publishedAt ? new Date(project.publishedAt).getFullYear() : new Date().getFullYear(),
-    screenshots: [
-      ...(cover ? [{ src: cover, alt: `${project.title} cover` }] : []),
-      ...gallery
-    ],
+    screenshots: screenshots,
     links: project.links || {},
     architecture: {
       title: project.architecture?.title || "Architecture",
@@ -275,3 +275,4 @@ export function getLocalDefaults() {
     testimonials: localTestimonials
   };
 }
+

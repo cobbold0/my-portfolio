@@ -20,8 +20,8 @@ export const projects: Project[] = [
     featured: true,
     year: 2025,
     screenshots: [
-      { src: "/projects/payments-1.svg", alt: "Payments dashboard overview" },
-      { src: "/projects/payments-2.svg", alt: "Incident drill-down" }
+      { src: "/projects/placeholder.svg", alt: "Payments dashboard overview" },
+      { src: "/projects/placeholder.svg", alt: "Incident drill-down" }
     ],
     links: {
       github: "https://github.com",
@@ -49,8 +49,8 @@ export const projects: Project[] = [
     featured: true,
     year: 2024,
     screenshots: [
-      { src: "/projects/commerce-1.svg", alt: "Homepage hero and collection cards" },
-      { src: "/projects/commerce-2.svg", alt: "Product detail screen" }
+      { src: "/projects/placeholder.svg", alt: "Homepage hero and collection cards" },
+      { src: "/projects/placeholder.svg", alt: "Product detail screen" }
     ],
     links: {
       github: "https://github.com",
@@ -80,8 +80,8 @@ export const projects: Project[] = [
     featured: true,
     year: 2025,
     screenshots: [
-      { src: "/projects/mobile-1.svg", alt: "Work order list" },
-      { src: "/projects/mobile-2.svg", alt: "Checklist detail" }
+      { src: "/projects/placeholder.svg", alt: "Work order list" },
+      { src: "/projects/placeholder.svg", alt: "Checklist detail" }
     ],
     links: {
       github: "https://github.com",
@@ -104,7 +104,7 @@ export const projects: Project[] = [
     category: "Backend",
     featured: false,
     year: 2023,
-    screenshots: [{ src: "/projects/governance-1.svg", alt: "Policy dashboard" }],
+    screenshots: [{ src: "/projects/placeholder.svg", alt: "Policy dashboard" }],
     links: { github: "https://github.com" },
     architecture: {
       title: "CI policy chain",
@@ -112,3 +112,4 @@ export const projects: Project[] = [
     }
   }
 ];
+
