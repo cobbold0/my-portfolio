@@ -146,6 +146,24 @@ To enable data collection:
 2. Open project dashboard.
 3. Enable Web Analytics for the project.
 
+## GitHub Profile Section
+
+Homepage can show live GitHub profile data:
+
+- Recent commit activity
+- Contributions by year (filterable in UI)
+- Repository count (public + private when token allows)
+
+Setup:
+
+1. Set your GitHub profile URL in `siteSettings.socials` (label `GitHub`).
+2. Add `GITHUB_TOKEN` in `.env.local`.
+3. Use a token with minimum read access (`Metadata` read-only is sufficient for public data; private counts/activity require access to your private repos).
+
+Fallback behavior:
+
+- Without token (or when token user does not match profile URL), the app shows public profile stats only.
+
 ## Contact Form Behavior
 
 Route handler: `POST /api/contact`

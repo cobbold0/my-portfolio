@@ -1,7 +1,7 @@
 import type { Metric, SocialLink } from "@/lib/types";
 
 export const profile = {
-  name: "Alex Rivera",
+  name: "Augustine Cobbold",
   roleLine: "Backend • Frontend • Mobile",
   tagline:
     "Product-focused engineer building scalable APIs, polished web experiences, and reliable mobile apps.",
@@ -9,7 +9,7 @@ export const profile = {
     "I partner with teams to ship measurable outcomes end-to-end, from architecture to observability.",
   location: "Austin, Texas, USA",
   timezone: "Central Time (UTC-6 / UTC-5 DST)",
-  email: "alex@portfolio.dev"
+  email: "a.kwawcobbold@gmail.com"
 };
 
 export const socials: SocialLink[] = [

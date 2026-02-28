@@ -42,6 +42,6 @@ const components: PortableTextComponents = {
   }
 };
 
-export function PortableTextRenderer({ value }: { value: unknown[] }) {
+export function PortableTextRenderer({ value }: { value: any }) {
   return <PortableText value={value} components={components} />;
 }

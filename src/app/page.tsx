@@ -3,12 +3,14 @@ import { ArrowRight, Download } from "lucide-react";
 import { skills } from "@/content/skills";
 import { getProjectsData, getSiteProfile, getTestimonialsData } from "@/lib/content";
 import { getAllPostsMeta } from "@/lib/blog";
+import { getGitHubProfile, getGitHubUsernameFromUrl } from "@/lib/github";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProjectCard } from "@/components/projects/project-card";
 import { BlogCard } from "@/components/blog/blog-card";
 import { AnimatedSection } from "@/components/layout/animated-section";
+import { GitHubProfileCard } from "@/components/home/github-profile-card";
 import { TestimonialsDialog } from "@/components/home/testimonials-dialog";
 
 export default async function HomePage() {
@@ -17,6 +19,9 @@ export default async function HomePage() {
   const testimonials = await getTestimonialsData();
   const featured = projects.filter((project) => project.featured).slice(0, 3);
   const posts = (await getAllPostsMeta()).slice(0, 3);
+  const githubUrl = profile.socials.find((social) => social.label.toLowerCase() === "github")?.href;
+  const githubUsername = getGitHubUsernameFromUrl(githubUrl);
+  const githubProfile = await getGitHubProfile(githubUsername);
 
   return (
     <div>
@@ -70,6 +75,17 @@ export default async function HomePage() {
           </div>
         </AnimatedSection>
       </section>
+
+      {githubProfile ? (
+        <section className="container py-6">
+          <AnimatedSection>
+            <h2 className="text-2xl font-semibold">GitHub</h2>
+            <div className="mt-6">
+              <GitHubProfileCard profile={githubProfile} />
+            </div>
+          </AnimatedSection>
+        </section>
+      ) : null}
 
       <section className="border-y bg-muted/30">
         <div className="container grid gap-6 py-8 md:grid-cols-3">
