@@ -131,7 +131,22 @@ function portableTextHeadings(blocks: unknown[] = []) {
 export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | null> {
   if (!hasSanityConfig()) return null;
 
-  const data = await client.fetch(siteSettingsQuery, {}, { next: { tags: ["settings"] } });
+  const data = await client.fetch<{
+    name?: string;
+    roleLine?: string;
+    tagline?: string;
+    bio?: string;
+    location?: string;
+    timezone?: string;
+    email?: string;
+    phone?: string;
+    socials?: SiteSettingsData["socials"];
+    metrics?: SiteSettingsData["metrics"];
+    defaultSeo?: { title?: string; description?: string; ogImage?: SanityImage };
+    primaryCtas?: { resumeUrl?: string };
+    resumeFileUrl?: string;
+    resumeUrl?: string;
+  }>(siteSettingsQuery, {}, { next: { tags: ["settings"] } });
   if (!data) return null;
 
   return {
@@ -145,11 +160,11 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
     phone: data.phone,
     socials: data.socials?.length ? data.socials : localSocials,
     metrics: data.metrics?.length ? data.metrics : localMetrics,
-    resumeUrl: data.resumeUrl || data.primaryCtas?.resumeUrl || "/resume.pdf",
+    resumeUrl: data.resumeFileUrl || data.resumeUrl || data.primaryCtas?.resumeUrl || "/resume.pdf",
     seo: {
       title: data.defaultSeo?.title,
       description: data.defaultSeo?.description,
-      ogImage: urlForImage(data.defaultSeo?.ogImage)
+      ogImage: urlForImage(data.defaultSeo?.ogImage) || undefined
     }
   };
 }

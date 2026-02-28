@@ -1,5 +1,9 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+function normalizeAssetId(value: string) {
+  return value.startsWith("drafts.") ? value.slice("drafts.".length) : value;
+}
+
 export default defineType({
   name: "siteSettings",
   title: "Site Settings",
@@ -56,6 +60,31 @@ export default defineType({
         defineField({ name: "description", type: "text", rows: 3 }),
         defineField({ name: "ogImage", type: "image", options: { hotspot: true } })
       ]
+    }),
+    defineField({
+      name: "resumeFile",
+      title: "Resume PDF",
+      type: "file",
+      options: {
+        accept: "application/pdf"
+      },
+      description: "Upload your latest resume PDF. Use filename resume (or resume.pdf).",
+      validation: (Rule) =>
+        Rule.custom(async (value, context) => {
+          const fileValue = value as { asset?: { _ref?: string } } | undefined;
+          const assetRef = fileValue?.asset?._ref;
+          if (!assetRef) return true;
+
+          const client = context.getClient({ apiVersion: "2025-01-01" });
+          const originalFilename = await client.fetch<string | null>(`*[_id == $id][0].originalFilename`, {
+            id: normalizeAssetId(assetRef)
+          });
+
+          const normalized = originalFilename?.toLowerCase();
+          return normalized === "resume" || normalized === "resume.pdf"
+            ? true
+            : "Resume file must be named resume or resume.pdf.";
+        })
     }),
     defineField({ name: "resumeUrl", type: "string", initialValue: "/resume.pdf" })
   ]

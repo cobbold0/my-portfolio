@@ -1,5 +1,5 @@
-import { defineConfig, StructureBuilder } from "sanity";
-import { deskTool } from "sanity/desk";
+import { defineConfig } from "sanity";
+import { deskTool, type StructureBuilder } from "sanity/desk";
 import { apiVersion, dataset, projectId } from "./env";
 import { schemaTypes } from "./schemaTypes";
 

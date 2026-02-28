@@ -13,6 +13,7 @@ export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
   primaryCtas,
   metrics[]{label, value},
   defaultSeo{title, description, ogImage},
+  "resumeFileUrl": resumeFile.asset->url,
   resumeUrl
 }`;
 

@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-Open: [http://localhost:3000](http://localhost:3000)
+Open: [http://localhost:3001](http://localhost:3001)
 
 ## Scripts
 
@@ -54,6 +54,9 @@ Behavior:
    - `NEXT_PUBLIC_SANITY_PROJECT_ID`
    - `NEXT_PUBLIC_SANITY_DATASET`
    - `NEXT_PUBLIC_SANITY_API_VERSION`
+   - `SANITY_STUDIO_PROJECT_ID` (same value as `NEXT_PUBLIC_SANITY_PROJECT_ID`)
+   - `SANITY_STUDIO_DATASET` (same value as `NEXT_PUBLIC_SANITY_DATASET`)
+   - `SANITY_STUDIO_API_VERSION` (same value as `NEXT_PUBLIC_SANITY_API_VERSION`)
    - `SANITY_API_READ_TOKEN` (optional for draft/private reads)
    - `SANITY_REVALIDATE_SECRET`
 4. Start Studio:
@@ -130,7 +133,8 @@ MDX conversion note:
 ## Resume
 
 - `public/resume.pdf` remains in place.
-- Resume button/link now reads from `siteSettings.resumeUrl` (falls back to `/resume.pdf`).
+- In Sanity `siteSettings`, upload `resumeFile` (PDF) to update the downloadable resume anytime.
+- Resume button/link now prefers Sanity `resumeFile` URL, then `siteSettings.resumeUrl`, and finally falls back to `/resume.pdf`.
 
 ## Vercel Analytics
 

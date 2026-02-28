@@ -37,7 +37,7 @@ export default async function HomePage() {
                 <Link href="/contact">Contact</Link>
               </Button>
               <Button asChild variant="secondary">
-                <Link href={profile.resumeUrl || "/resume"}>
+                <Link href={profile.resumeUrl || "/resume.pdf"}>
                   Download CV <Download className="h-4 w-4" />
                 </Link>
               </Button>

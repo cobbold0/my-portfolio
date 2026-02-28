@@ -13,30 +13,41 @@ export function ContactForm() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setPending(true);
     setStatus("");
 
-    const formData = new FormData(event.currentTarget);
-    const payload = Object.fromEntries(formData.entries());
+    try {
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
 
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-    const json = (await response.json()) as { message: string };
+      let message = "Invalid form submission.";
+      try {
+        const json = (await response.json()) as { message?: string };
+        message = json.message || message;
+      } catch {
+        // Keep fallback message if response body is not valid JSON.
+      }
 
-    if (!response.ok) {
-      setStatus(json.message);
+      if (!response.ok) {
+        setStatus(message);
+        return;
+      }
+
+      trackEvent({ name: "submit_contact" });
+      form.reset();
+      setStatus("Message sent successfully.");
+    } catch {
+      setStatus("Unable to send message right now. Please try again.");
+    } finally {
       setPending(false);
-      return;
     }
-
-    trackEvent({ name: "submit_contact" });
-    event.currentTarget.reset();
-    setStatus("Message sent successfully.");
-    setPending(false);
   }
 
   return (
