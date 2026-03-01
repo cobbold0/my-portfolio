@@ -2,10 +2,42 @@ import Link from "next/link";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import type { ReactNode } from "react";
 
+function nodeToText(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(nodeToText).join("");
+  if (node && typeof node === "object" && "props" in node) {
+    const childNode = (node as { props?: { children?: ReactNode } }).props?.children;
+    return nodeToText(childNode);
+  }
+  return "";
+}
+
+function toHeadingId(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+}
+
 const components: PortableTextComponents = {
   block: {
-    h2: ({ children }: { children?: ReactNode }) => <h2 className="mt-8 text-2xl font-semibold">{children}</h2>,
-    h3: ({ children }: { children?: ReactNode }) => <h3 className="mt-6 text-xl font-semibold">{children}</h3>,
+    h2: ({ children }: { children?: ReactNode }) => {
+      const id = toHeadingId(nodeToText(children));
+      return (
+        <h2 id={id} className="mt-8 scroll-mt-24 text-2xl font-semibold">
+          {children}
+        </h2>
+      );
+    },
+    h3: ({ children }: { children?: ReactNode }) => {
+      const id = toHeadingId(nodeToText(children));
+      return (
+        <h3 id={id} className="mt-6 scroll-mt-24 text-xl font-semibold">
+          {children}
+        </h3>
+      );
+    },
     normal: ({ children }: { children?: ReactNode }) => <p className="mt-4 text-base leading-7 text-muted-foreground">{children}</p>,
     blockquote: ({ children }: { children?: ReactNode }) => (
       <blockquote className="mt-6 border-l-2 pl-4 italic text-muted-foreground">{children}</blockquote>
