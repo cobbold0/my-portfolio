@@ -11,5 +11,9 @@ type StudioClientProps = {
 
 export function StudioClient({ projectId, dataset, apiVersion }: StudioClientProps) {
   const config = createStudioConfig({ projectId, dataset, apiVersion });
-  return <NextStudio config={config} />;
+  return (
+    <div style={{ height: "100vh", overflow: "hidden" }}>
+      <NextStudio config={config} />
+    </div>
+  );
 }

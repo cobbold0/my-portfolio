@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { skills } from "@/content/skills";
-import { getProjectsData, getSiteProfile, getTestimonialsData } from "@/lib/content";
+import { getProjectsData, getSiteProfile, getSkillsData, getTestimonialsData } from "@/lib/content";
 import { getAllPostsMeta } from "@/lib/blog";
 import { getGitHubProfile, getGitHubUsernameFromUrl } from "@/lib/github";
 import { getLinkedInProfileFromUrl } from "@/lib/linkedin";
@@ -21,6 +20,7 @@ export default async function HomePage() {
   const profile = await getSiteProfile();
   const projects = await getProjectsData();
   const testimonials = await getTestimonialsData();
+  const skills = await getSkillsData();
   const posts = (await getAllPostsMeta()).slice(0, 3);
   const githubUrl = profile.socials.find((social) => social.label.toLowerCase() === "github")?.href;
   const githubUsername = getGitHubUsernameFromUrl(githubUrl);
@@ -28,12 +28,7 @@ export default async function HomePage() {
   const linkedinUrl = profile.socials.find((social) => social.label.toLowerCase() === "linkedin")?.href;
   const linkedinProfile = getLinkedInProfileFromUrl(linkedinUrl);
   const spotlightSkills = skills
-    .filter((item) => ["Backend", "Frontend", "Mobile"].includes(item.category))
-    .sort((a, b) => {
-      if (a.category === "Frontend") return -1;
-      if (b.category === "Frontend") return 1;
-      return 0;
-    });
+    .filter((item) => ["Mobile", "Frontend", "Backend"].includes(item.category))
 
   return (
     <div>
@@ -57,19 +52,19 @@ export default async function HomePage() {
             <div className="mt-6 grid gap-6 md:grid-cols-3">
               {spotlightSkills.map((group) => (
                 <DrawBorder key={group.category}>
-                  <Card className={`border-transparent ${group.category === "Frontend" ? "bg-primary/5" : ""}`}>
+                  <Card className={`border-transparent ${group.category === "Mobile" ? "bg-primary/5" : ""}`}>
                     <CardHeader>
                       <CardTitle>{group.category}</CardTitle>
-                      <CardDescription>{group.category === "Frontend" ? "UI-focused execution" : "Engineering capabilities"}</CardDescription>
+                      <CardDescription>{group.level}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-wrap gap-2">
                       {group.items.slice(0, 6).map((item) => (
                         <Badge
-                          key={item}
+                          key={item.name}
                           variant="secondary"
                           className={group.category === "Frontend" ? "border-primary/20 bg-primary/10 text-foreground" : ""}
                         >
-                          {item}
+                          {item.name}
                         </Badge>
                       ))}
                     </CardContent>
@@ -173,8 +168,24 @@ export default async function HomePage() {
                 <Card className="border-transparent">
                   <CardContent className="pt-6">
                     <p className="text-muted-foreground">"{item.quote}"</p>
-                    <p className="mt-3 text-sm font-medium">{item.name}</p>
-                    <p className="text-xs text-muted-foreground">{item.role}</p>
+                    <div className="mt-4 flex items-center gap-3">
+                      {item.avatar ? (
+                        <img src={item.avatar} alt={`${item.name} photo`} className="h-10 w-10 rounded-full border object-cover" loading="lazy" />
+                      ) : (
+                        <span className="flex h-10 w-10 items-center justify-center rounded-full border bg-muted text-xs font-semibold">
+                          {item.name
+                            .split(" ")
+                            .map((part) => part[0])
+                            .join("")
+                            .slice(0, 2)
+                            .toUpperCase()}
+                        </span>
+                      )}
+                      <div>
+                        <p className="text-sm font-medium">{item.name}</p>
+                        <p className="text-xs text-muted-foreground">{item.role}</p>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </DrawBorder>

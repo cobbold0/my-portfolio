@@ -95,13 +95,13 @@ export function HeroEditorial({ profile, linkedinProfile }: HeroEditorialProps) 
 
       {profile.profileImage ? (
         <div className="relative z-10 mx-auto w-full max-w-[320px] lg:mx-0 lg:justify-self-end">
-          <div className="overflow-hidden border border-border bg-card">
+          <div className="overflow-hidden border border-border bg-transparent">
             <Image
               src={profile.profileImage}
               alt={`${profile.name} profile picture`}
               width={420}
               height={420}
-              className="h-auto w-full object-cover"
+              className="h-auto w-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-300"
               priority
             />
           </div>

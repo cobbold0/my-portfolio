@@ -103,3 +103,11 @@ export const testimonialsQuery = groq`*[_type == "testimonial"] | order(_created
   quote,
   avatar
 }`;
+
+export const skillsQuery = groq`*[_type == "skill"] | order(category asc, order asc, level desc, name asc){
+  name,
+  category,
+  level,
+  categoryLevel,
+  order
+}`;

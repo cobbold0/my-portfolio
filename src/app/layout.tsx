@@ -9,7 +9,6 @@ import { PageViewTracker } from "@/components/layout/page-view-tracker";
 import { AnalyticsClickTracker } from "@/components/layout/analytics-click-tracker";
 import { PwaRegister } from "@/components/layout/pwa-register";
 import { FirebaseAnalytics } from "@/components/layout/firebase-analytics";
-import { DevToolsGuard } from "@/components/layout/devtools-guard";
 import { MagneticCursor } from "@/components/layout/magnetic-cursor";
 import { displayFont, sansFont } from "@/lib/fonts";
 
@@ -61,7 +60,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${sansFont.variable} ${displayFont.variable} min-h-screen font-sans`}>
         <ThemeProvider>
           <MagneticCursor />
-          <DevToolsGuard />
           <PwaRegister />
           <PageViewTracker />
           <AnalyticsClickTracker />

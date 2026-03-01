@@ -145,7 +145,15 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <div className="mt-4 grid gap-4 md:grid-cols-2">
               {project.screenshots.length > 0 ? (
                 project.screenshots.map((shot) => (
-                  <Image key={shot.src} src={shot.src} alt={shot.alt} width={1200} height={675} className="rounded-lg border" />
+                  <div key={shot.src} className="relative overflow-hidden rounded-lg border bg-muted/20 aspect-[16/10]">
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-contain p-1"
+                    />
+                  </div>
                 ))
               ) : (
                 <p className="text-sm text-muted-foreground">No screenshots available yet.</p>

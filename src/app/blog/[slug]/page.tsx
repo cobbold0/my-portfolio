@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
 import { getAllPostSlugs, getPostBySlug, getPostMeta } from "@/lib/blog";
+import { formatDateUtc } from "@/lib/date";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableOfContents } from "@/components/blog/toc";
@@ -77,7 +78,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             ))}
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
-            {new Date(post.frontmatter.date).toLocaleDateString()} - {post.readingTime}
+            {formatDateUtc(post.frontmatter.date)} - {post.readingTime}
           </p>
           {post.shareOnLinkedIn ? (
             <div className="mt-4">

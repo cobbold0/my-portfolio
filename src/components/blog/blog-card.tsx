@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BlogPostMeta } from "@/lib/blog";
+import { formatDateUtc } from "@/lib/date";
 import { setNavigationContext, trackEvent } from "@/lib/analytics";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,9 +42,10 @@ export function BlogCard({ post, sourceSurface = "unknown" }: { post: BlogPostMe
       <CardContent>
         <p className="text-sm text-muted-foreground">{post.summary}</p>
         <p className="mt-3 text-xs text-muted-foreground">
-          {new Date(post.date).toLocaleDateString()} · {post.readingTime}
+          {formatDateUtc(post.date)} - {post.readingTime}
         </p>
       </CardContent>
     </Card>
   );
 }
+

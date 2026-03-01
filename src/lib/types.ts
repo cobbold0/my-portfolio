@@ -9,8 +9,16 @@ export type Metric = {
 };
 
 export type SkillGroup = {
-  category: "Backend" | "Frontend" | "Mobile" | "Tools";
-  items: string[];
+  category: "Backend" | "Frontend" | "Mobile" | "Tools" | "Other";
+  level: SkillStrength;
+  items: SkillItem[];
+};
+
+export type SkillStrength = "BEGINNER" | "INTERMEDIATE" | "ADVANCED" | "EXPERT";
+
+export type SkillItem = {
+  name: string;
+  level: 1 | 2 | 3 | 4 | 5;
 };
 
 export type ProjectCategory = "Backend" | "Frontend" | "Mobile";
