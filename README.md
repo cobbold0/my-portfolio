@@ -77,6 +77,7 @@ Defined in `/sanity/schemaTypes`:
 - `post`
 - `experience`
 - `testimonial`
+- `skill`
 
 Desk structure is configured so `siteSettings` is a singleton and others are grouped lists.
 
@@ -91,6 +92,7 @@ Supported tags:
 - `posts`, `post:<slug>`
 - `experience`
 - `testimonials`
+- `skills`
 
 ### Sanity webhook configuration
 
@@ -103,6 +105,7 @@ In Sanity project settings, create a webhook:
   - `post`
   - `experience`
   - `testimonial`
+  - `skill`
 - HTTP method: `POST`
 - Payload: include `_type` and `slug.current` when available.
 
@@ -122,6 +125,11 @@ What it does:
 - Upserts posts by slug.
 - Upserts experience entries.
 - Upserts testimonials.
+- Upserts skills by deterministic id (`skill.<category>.<slug>`), including:
+  - per-item numeric `level` (`1..5`)
+  - category-level label `categoryLevel` (`BEGINNER`, `INTERMEDIATE`, `ADVANCED`, `EXPERT`)
+  - `order` for display ordering
+- Deletes stale `skill` documents that no longer exist in local source.
 
 Idempotency:
 
@@ -137,6 +145,12 @@ MDX conversion note:
 - `public/resume.pdf` remains in place.
 - In Sanity `siteSettings`, upload `resumeFile` (PDF) to update the downloadable resume anytime.
 - Resume button/link now prefers Sanity `resumeFile` URL, then `siteSettings.resumeUrl`, and finally falls back to `/resume.pdf`.
+
+## Skills Page
+
+- A dedicated `/skills` route lists flattened skill items from all categories.
+- The page uses rectangular cards with theme-aware color styling.
+- Home and Resume can use category-level labels (for example `BEGINNER`) while keeping item numeric levels in data.
 
 ## Firebase Analytics
 

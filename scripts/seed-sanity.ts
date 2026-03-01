@@ -6,6 +6,7 @@ import { createClient } from "@sanity/client";
 import { profile, socials, metrics } from "../src/content/profile";
 import { projects } from "../src/content/projects";
 import { experience } from "../src/content/experience";
+import { skills } from "../src/content/skills";
 import { testimonials } from "../src/content/testimonials";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
@@ -123,6 +124,40 @@ async function seedTestimonials() {
   }
 }
 
+async function seedSkills() {
+  const expectedIds = new Set<string>();
+
+  for (const group of skills) {
+    const category = group.category.toLowerCase();
+    for (const [index, item] of group.items.entries()) {
+      const slug = item.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+      const id = `skill.${category}.${slug}`;
+      expectedIds.add(id);
+
+      await client.createOrReplace({
+        _id: id,
+        _type: "skill",
+        name: item.name,
+        category,
+        level: item.level,
+        categoryLevel: group.level,
+        order: index + 1
+      });
+    }
+  }
+
+  const existingIds = await client.fetch<string[]>(`*[_type == "skill" && defined(_id)]._id`);
+  const staleIds = (existingIds || []).filter((id) => !expectedIds.has(id));
+
+  for (const id of staleIds) {
+    await client.delete(id);
+  }
+
+  if (staleIds.length > 0) {
+    console.log(`Deleted ${staleIds.length} stale skill documents.`);
+  }
+}
+
 async function seedPosts() {
   const blogDir = path.join(process.cwd(), "src", "content", "blog");
   const files = (await fs.readdir(blogDir)).filter((file) => file.endsWith(".mdx"));
@@ -152,14 +187,14 @@ async function seedPosts() {
 }
 
 async function main() {
-  await seedSiteSettings();
-  await seedProjects();
-  await seedPosts();
-  await seedExperience();
-  await seedTestimonials();
+  // await seedSiteSettings();
+  // await seedProjects();
+  // await seedPosts();
+  // await seedExperience();
+  // await seedTestimonials();
+  await seedSkills();
 
-  console.log("Sanity seed complete.");
-  console.log("Note: local MDX posts are converted to plain paragraph Portable Text blocks.");
+  console.log("Sanity skills seed complete.");
 }
 
 main().catch((error) => {

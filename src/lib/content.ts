@@ -1,13 +1,15 @@
 import { education, certifications } from "@/content/experience";
 import { profile as localProfile } from "@/content/profile";
 import { projects as localProjects } from "@/content/projects";
+import { skills as localSkills } from "@/content/skills";
 import { getContentSource, isSanityEnabled } from "@/lib/content-source";
-import type { SiteSettingsData } from "@/lib/sanity/types";
+import type { SiteSettingsData, TestimonialData } from "@/lib/sanity/types";
 import {
   getExperienceFromSanity,
   getLocalDefaults,
   getProjectBySlugFromSanity,
   getProjectsFromSanity,
+  getSkillsFromSanity,
   getSiteSettingsFromSanity,
   getTestimonialsFromSanity
 } from "@/lib/sanity/data";
@@ -65,13 +67,22 @@ export async function getExperienceData() {
   return getLocalDefaults().experience;
 }
 
-export async function getTestimonialsData() {
+export async function getTestimonialsData(): Promise<TestimonialData[]> {
   const source = getContentSource();
   if (source === "sanity" && isSanityEnabled()) {
     const items = await getTestimonialsFromSanity();
     if (items.length > 0) return items;
   }
   return getLocalDefaults().testimonials;
+}
+
+export async function getSkillsData() {
+  const source = getContentSource();
+  if (source === "sanity" && isSanityEnabled()) {
+    const items = await getSkillsFromSanity();
+    if (items.length > 0) return items;
+  }
+  return localSkills;
 }
 
 export function getEducationAndCertifications() {

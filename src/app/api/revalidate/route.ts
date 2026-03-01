@@ -37,12 +37,16 @@ function tagsForPayload(payload: WebhookPayload) {
     case "testimonial":
       tags.add("testimonials");
       break;
+    case "skill":
+      tags.add("skills");
+      break;
     default:
       tags.add("settings");
       tags.add("projects");
       tags.add("posts");
       tags.add("experience");
       tags.add("testimonials");
+      tags.add("skills");
   }
 
   return [...tags];

@@ -2,8 +2,9 @@ import readingTime from "reading-time";
 import { profile as localProfile, socials as localSocials, metrics as localMetrics, linkedinEndorsements as localLinkedInEndorsements } from "@/content/profile";
 import { projects as localProjects } from "@/content/projects";
 import { experience as localExperience } from "@/content/experience";
+import { skills as localSkills } from "@/content/skills";
 import { testimonials as localTestimonials } from "@/content/testimonials";
-import type { Project } from "@/lib/types";
+import type { Project, SkillGroup, SkillItem, SkillStrength } from "@/lib/types";
 import { client, dataset, projectId } from "@/lib/sanity/client";
 import {
   experienceQuery,
@@ -11,6 +12,7 @@ import {
   postsQuery,
   projectBySlugQuery,
   projectsQuery,
+  skillsQuery,
   siteSettingsQuery,
   testimonialsQuery
 } from "@/lib/sanity/queries";
@@ -60,6 +62,14 @@ type SanityPost = {
   body?: unknown[];
   readingTime?: string;
   shareOnLinkedIn?: boolean;
+};
+
+type SanitySkill = {
+  name: string;
+  category: string;
+  level?: number;
+  categoryLevel?: string;
+  order?: number;
 };
 
 function mapSanityProject(project: SanityProject): Project {
@@ -274,6 +284,69 @@ export async function getTestimonialsFromSanity(): Promise<TestimonialData[]> {
   }));
 }
 
+const skillCategoryMap: Record<string, SkillGroup["category"]> = {
+  frontend: "Frontend",
+  backend: "Backend",
+  mobile: "Mobile",
+  tools: "Tools",
+  other: "Other"
+};
+
+const defaultSkillStrengthByCategory: Record<SkillGroup["category"], SkillStrength> = {
+  Backend: "ADVANCED",
+  Frontend: "BEGINNER",
+  Mobile: "ADVANCED",
+  Tools: "INTERMEDIATE",
+  Other: "INTERMEDIATE"
+};
+
+function normalizeSkillStrength(level?: string, category?: SkillGroup["category"]): SkillStrength {
+  if (level === "BEGINNER" || level === "INTERMEDIATE" || level === "ADVANCED" || level === "EXPERT") return level;
+  if (category) return defaultSkillStrengthByCategory[category];
+  return "INTERMEDIATE";
+}
+
+function normalizeSkillLevel(level?: number): SkillItem["level"] {
+  if (typeof level !== "number" || Number.isNaN(level)) return 3;
+  const rounded = Math.round(level);
+  if (rounded < 1) return 1;
+  if (rounded > 5) return 5;
+  return rounded as SkillItem["level"];
+}
+
+export async function getSkillsFromSanity(): Promise<SkillGroup[]> {
+  if (!hasSanityConfig()) return [];
+
+  const data = await client.fetch<SanitySkill[]>(skillsQuery, {}, { next: { tags: ["skills"] } });
+  const items = data || [];
+  if (!items.length) return [];
+
+  const grouped = new Map<SkillGroup["category"], { level: SkillStrength; items: SkillItem[] }>();
+  for (const item of items) {
+    const category = skillCategoryMap[(item.category || "").toLowerCase()] || "Other";
+    if (!category || !item.name) continue;
+
+    const existing = grouped.get(category) || { level: normalizeSkillStrength(item.categoryLevel, category), items: [] };
+    if (item.categoryLevel) {
+      existing.level = normalizeSkillStrength(item.categoryLevel, category);
+    }
+    existing.items.push({
+      name: item.name,
+      level: normalizeSkillLevel(item.level)
+    });
+    grouped.set(category, existing);
+  }
+
+  const orderedCategories: SkillGroup["category"][] = ["Mobile", "Backend", "Frontend", "Tools", "Other"];
+  return orderedCategories
+    .filter((category) => (grouped.get(category)?.items.length || 0) > 0)
+    .map((category) => ({
+      category,
+      level: grouped.get(category)?.level || defaultSkillStrengthByCategory[category],
+      items: grouped.get(category)?.items || []
+    }));
+}
+
 export function getLocalDefaults() {
   return {
     profile: localProfile,
@@ -282,7 +355,8 @@ export function getLocalDefaults() {
     linkedinEndorsements: localLinkedInEndorsements,
     projects: localProjects,
     experience: localExperience,
-    testimonials: localTestimonials
+    testimonials: localTestimonials,
+    skills: localSkills
   };
 }
 

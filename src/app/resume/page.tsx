@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Download } from "lucide-react";
-import { skills } from "@/content/skills";
 import { absoluteUrl } from "@/lib/site";
-import { getEducationAndCertifications, getExperienceData, getSiteProfile } from "@/lib/content";
+import { getEducationAndCertifications, getExperienceData, getSiteProfile, getSkillsData } from "@/lib/content";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,6 +21,7 @@ export const metadata: Metadata = {
 export default async function ResumePage() {
   const profile = await getSiteProfile();
   const experience = await getExperienceData();
+  const skills = await getSkillsData();
   const { education, certifications } = getEducationAndCertifications();
 
   return (
@@ -73,12 +73,14 @@ export default async function ResumePage() {
           {skills.map((group) => (
             <Card key={group.category}>
               <CardHeader>
-                <CardTitle>{group.category}</CardTitle>
+                <CardTitle>
+                  {group.category} - {group.level}
+                </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-wrap gap-2">
                 {group.items.map((item) => (
-                  <Badge key={item} variant="secondary">
-                    {item}
+                  <Badge key={item.name} variant="secondary">
+                    {item.name}
                   </Badge>
                 ))}
               </CardContent>

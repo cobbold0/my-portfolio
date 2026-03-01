@@ -68,10 +68,16 @@ export function FocusProjectGrid({ projects }: { projects: Project[] }) {
                   className="object-cover transition duration-300 group-hover:scale-[1.04]"
                 />
                 {!focused ? <div className="absolute inset-0 backdrop-blur-sm" /> : null}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/18 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/32 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <p className="text-[11px] tracking-[0.16em] text-white/80">{project.category.toUpperCase()}</p>
-                  <MagneticTitle>{project.title}</MagneticTitle>
+                  <div className="inline-block rounded-md bg-black/45 px-3 py-2 backdrop-blur-[1px]">
+                    <p className="text-[11px] tracking-[0.16em] text-white/90 [text-shadow:0_1px_6px_rgba(0,0,0,0.85)]">
+                      {project.category.toUpperCase()}
+                    </p>
+                    <div className="[text-shadow:0_2px_12px_rgba(0,0,0,0.95)]">
+                      <MagneticTitle>{project.title}</MagneticTitle>
+                    </div>
+                  </div>
                 </div>
               </Link>
             </DrawBorder>

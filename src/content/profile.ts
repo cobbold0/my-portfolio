@@ -22,7 +22,7 @@ export const socials: SocialLink[] = [
 export const metrics: Metric[] = [
   { label: "Apps shipped", value: "18+" },
   { label: "APIs built", value: "40+" },
-  { label: "Crash rate reduction", value: "-37%" }
+  { label: "Crash-free sessions", value: "99.63%" }
 ];
 
 export const linkedinEndorsements = [
