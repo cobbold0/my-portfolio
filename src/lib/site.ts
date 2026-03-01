@@ -24,7 +24,7 @@ function getSiteUrl() {
     return normalizeUrl(explicit);
   }
 
-  return "http://localhost:3000";
+  return "http://localhost:3001";
 }
 
 export const siteConfig = {

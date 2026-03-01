@@ -101,7 +101,7 @@ export function HeroEditorial({ profile, linkedinProfile }: HeroEditorialProps) 
               alt={`${profile.name} profile picture`}
               width={420}
               height={420}
-              className="h-auto w-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-300"
+              className="h-auto w-full object-cover transition-opacity duration-300"
               priority
             />
           </div>
