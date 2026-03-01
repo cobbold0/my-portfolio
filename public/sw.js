@@ -1,5 +1,14 @@
-const CACHE_NAME = "portfolio-cache-v2";
-const STATIC_ASSETS = ["/", "/manifest.webmanifest", "/icons/icon.svg", "/icons/maskable-icon.svg"];
+const CACHE_NAME = "portfolio-cache-v3";
+const STATIC_ASSETS = [
+  "/",
+  "/icons/site.webmanifest",
+  "/icons/favicon.ico",
+  "/icons/favicon-16x16.png",
+  "/icons/favicon-32x32.png",
+  "/icons/apple-touch-icon.png",
+  "/icons/android-chrome-192x192.png",
+  "/icons/android-chrome-512x512.png"
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS)));
