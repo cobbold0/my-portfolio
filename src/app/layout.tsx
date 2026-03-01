@@ -47,9 +47,15 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       images: [profile.seo?.ogImage || absoluteUrl("/api/og?page=home")]
     },
+    manifest: "/icons/site.webmanifest",
     icons: {
-      icon: ["/icons/icon.svg"],
-      apple: ["/icons/apple-touch-icon.svg"]
+      icon: [
+        { url: "/icons/favicon.ico" },
+        { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" }
+      ],
+      apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+      shortcut: ["/icons/favicon.ico"]
     }
   };
 }
