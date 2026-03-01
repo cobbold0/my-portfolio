@@ -3,40 +3,40 @@
 @tailwind utilities;
 
 :root {
-  --background: 210 20% 98%;
-  --foreground: 222.2 47.4% 11.2%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 47.4% 11.2%;
-  --primary: 215 65% 33%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 22% 92%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 16% 93%;
-  --muted-foreground: 215 16% 42%;
-  --accent: 187 45% 86%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --border: 210 20% 88%;
-  --input: 210 20% 88%;
-  --ring: 215 65% 33%;
-  --radius: 0.9rem;
+  --background: 38 27% 94%;
+  --foreground: 0 0% 10%;
+  --card: 40 20% 96%;
+  --card-foreground: 0 0% 10%;
+  --primary: 0 0% 10%;
+  --primary-foreground: 38 27% 94%;
+  --secondary: 36 20% 90%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 35 18% 88%;
+  --muted-foreground: 0 0% 34%;
+  --accent: 42 36% 84%;
+  --accent-foreground: 0 0% 10%;
+  --border: 30 12% 80%;
+  --input: 30 12% 80%;
+  --ring: 0 0% 10%;
+  --radius: 0rem;
 }
 
 .dark {
-  --background: 222 47% 7%;
-  --foreground: 210 40% 96%;
-  --card: 222 47% 9%;
-  --card-foreground: 210 40% 96%;
-  --primary: 191 77% 43%;
-  --primary-foreground: 220 45% 7%;
-  --secondary: 217 33% 16%;
-  --secondary-foreground: 210 40% 96%;
-  --muted: 217 32% 16%;
-  --muted-foreground: 215 20% 70%;
-  --accent: 200 66% 20%;
-  --accent-foreground: 210 40% 96%;
-  --border: 217 32% 23%;
-  --input: 217 32% 23%;
-  --ring: 191 77% 43%;
+  --background: 0 0% 4%;
+  --foreground: 40 24% 94%;
+  --card: 0 0% 6%;
+  --card-foreground: 40 24% 94%;
+  --primary: 36 96% 56%;
+  --primary-foreground: 0 0% 6%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 40 24% 94%;
+  --muted: 0 0% 9%;
+  --muted-foreground: 0 0% 70%;
+  --accent: 270 44% 34%;
+  --accent-foreground: 40 24% 94%;
+  --border: 0 0% 14%;
+  --input: 0 0% 14%;
+  --ring: 36 96% 56%;
 }
 
 * {
@@ -55,6 +55,13 @@ body {
 .hero-grid {
   background-image: radial-gradient(circle at 1px 1px, hsl(var(--border)) 1px, transparent 0);
   background-size: 28px 28px;
+}
+
+.gradient-title {
+  background: linear-gradient(110deg, hsl(0 0% 10%), hsl(0 0% 10%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .prose pre {

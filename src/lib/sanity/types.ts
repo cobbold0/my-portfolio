@@ -6,6 +6,7 @@ export type SiteSettingsData = {
   roleLine: string;
   tagline: string;
   shortBio: string;
+  profileImage?: string;
   location: string;
   timezone: string;
   email: string;

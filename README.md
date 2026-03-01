@@ -40,6 +40,7 @@ Set `CONTENT_SOURCE` in `.env.local`:
 
 - `sanity` (default): use Sanity as source of truth.
 - `local`: use existing local files in `src/content/*`.
+- Optional: `NEXT_PUBLIC_SOURCE_REPO_URL` to control the repository/fork links shown on the `/about` page.
 
 Behavior:
 
@@ -230,6 +231,19 @@ Behavior:
 - Badge is hidden when URL is missing/invalid.
 - Badge theme follows app light/dark mode.
 
+## About Page and Open Source
+
+The site includes an `/about` page that documents:
+
+- Architecture and implementation approach
+- Technology stack used
+- Open-source usage and fork flow
+
+Repo action buttons on this page use:
+
+- `NEXT_PUBLIC_SOURCE_REPO_URL` when set
+- Fallback to your GitHub social URL in `siteSettings.socials`
+
 ## Contact Form Behavior
 
 Route handler: `POST /api/contact`
@@ -269,6 +283,7 @@ sanity/
   schemaTypes/
 src/
   app/
+    about/
   components/
   content/
   lib/

@@ -10,6 +10,8 @@ import { AnalyticsClickTracker } from "@/components/layout/analytics-click-track
 import { PwaRegister } from "@/components/layout/pwa-register";
 import { FirebaseAnalytics } from "@/components/layout/firebase-analytics";
 import { DevToolsGuard } from "@/components/layout/devtools-guard";
+import { MagneticCursor } from "@/components/layout/magnetic-cursor";
+import { displayFont, sansFont } from "@/lib/fonts";
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await getSiteProfile();
@@ -56,8 +58,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen font-sans">
+      <body className={`${sansFont.variable} ${displayFont.variable} min-h-screen font-sans`}>
         <ThemeProvider>
+          <MagneticCursor />
           <DevToolsGuard />
           <PwaRegister />
           <PageViewTracker />
