@@ -3,6 +3,8 @@ import { absoluteUrl } from "@/lib/site";
 import { getAllPostsMeta } from "@/lib/blog";
 import { BlogClient } from "@/components/blog/blog-client";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blog",
   description: "Engineering notes on backend systems, frontend architecture, and mobile reliability.",

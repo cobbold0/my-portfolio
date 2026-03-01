@@ -23,6 +23,11 @@ type Frontmatter = {
 
 const blogDir = path.join(process.cwd(), "src", "content", "blog");
 
+function toTimestamp(date: string) {
+  const value = new Date(date).getTime();
+  return Number.isFinite(value) ? value : 0;
+}
+
 async function getAllPostSlugsLocal() {
   const files = await fs.readdir(blogDir);
   return files.filter((file) => file.endsWith(".mdx")).map((file) => file.replace(/\.mdx$/, ""));
@@ -46,7 +51,7 @@ async function getPostMetaLocal(slug: string): Promise<BlogPostMeta> {
 async function getAllPostsMetaLocal(): Promise<BlogPostMeta[]> {
   const slugs = await getAllPostSlugsLocal();
   const posts = await Promise.all(slugs.map((slug) => getPostMetaLocal(slug)));
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return posts.sort((a, b) => toTimestamp(b.date) - toTimestamp(a.date));
 }
 
 async function getPostBySlugLocal(slug: string): Promise<BlogPostDetail> {
@@ -97,7 +102,7 @@ async function getPostBySlugLocal(slug: string): Promise<BlogPostDetail> {
 export async function getAllPostsMeta(): Promise<BlogPostMeta[]> {
   if (getContentSource() === "sanity" && isSanityEnabled()) {
     const posts = await getPostsMetaFromSanity();
-    if (posts.length > 0) return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+    if (posts.length > 0) return posts.sort((a, b) => toTimestamp(b.date) - toTimestamp(a.date));
   }
 
   return getAllPostsMetaLocal();
