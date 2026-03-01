@@ -28,6 +28,7 @@ export async function getSiteProfile(): Promise<SiteSettingsData> {
     location: local.profile.location,
     timezone: local.profile.timezone,
     email: local.profile.email,
+    availableToMentor: local.profile.availableToMentor,
     socials: local.socials,
     metrics: local.metrics,
     linkedinEndorsements: local.linkedinEndorsements,

@@ -41,6 +41,8 @@
 
 * {
   @apply border-border;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.75) hsl(var(--muted) / 0.65);
 }
 
 html,
@@ -76,4 +78,27 @@ body {
 .hljs {
   color: #e2e8f0;
   background: #0f172a;
+}
+
+*::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--muted) / 0.55);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid hsl(var(--background));
+  background: linear-gradient(180deg, hsl(36 96% 56%), hsl(270 58% 54%));
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, hsl(40 98% 64%), hsl(270 64% 62%));
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }

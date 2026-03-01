@@ -9,7 +9,8 @@ export const profile = {
     "I partner with teams to ship measurable outcomes end-to-end, from architecture to observability.",
   location: "Austin, Texas, USA",
   timezone: "Central Time (UTC-6 / UTC-5 DST)",
-  email: "a.kwawcobbold@gmail.com"
+  email: "a.kwawcobbold@gmail.com",
+  availableToMentor: true
 };
 
 export const socials: SocialLink[] = [

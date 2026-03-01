@@ -25,6 +25,13 @@ export default defineType({
     defineField({ name: "email", type: "string" }),
     defineField({ name: "phone", type: "string" }),
     defineField({
+      name: "availableToMentor",
+      title: "Available to Mentor",
+      type: "boolean",
+      initialValue: false,
+      description: "Show a public badge indicating that you are available to mentor."
+    }),
+    defineField({
       name: "socials",
       type: "array",
       of: [
