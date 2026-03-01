@@ -169,6 +169,8 @@ Tracked events (prefixed as `app_*` in GA4):
 
 - `app_analytics_boot`
 - `app_page_view` (`pathname`, `nav_context`)
+- `app_tool_open` (`tool`, `pathname`, `traffic_source`, `referrer_host`, `nav_context`)
+- `app_tool_action` (`tool`, `action`, plus tool-specific fields like `count`)
 - `app_page_engagement` (`pathname`, `duration_sec`, `max_scroll_pct`)
 - `app_section_engagement` (home sections: `section`, `duration_sec`)
 - `app_home_scroll_bottom`

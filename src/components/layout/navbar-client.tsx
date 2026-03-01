@@ -15,6 +15,7 @@ import { lockStudioAction } from "@/app/studio/actions";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/tools", label: "Tools" },
   { href: "/projects", label: "Projects" },
   { href: "/blog", label: "Blog" },
   { href: "/resume", label: "Resume" },

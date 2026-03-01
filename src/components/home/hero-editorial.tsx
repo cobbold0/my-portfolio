@@ -13,6 +13,7 @@ type HeroEditorialProps = {
     name: string;
     tagline: string;
     roleLine: string;
+    availableToMentor?: boolean;
     resumeUrl?: string;
     profileImage?: string;
   };
@@ -45,9 +46,16 @@ export function HeroEditorial({ profile, linkedinProfile }: HeroEditorialProps) 
       </motion.div>
 
       <div className="relative z-10">
-        <Badge className="mb-8 rounded-none border border-border bg-transparent px-3 py-1 text-xs tracking-[0.18em] text-muted-foreground">
-          {profile.roleLine}
-        </Badge>
+        <div className="mb-8 flex flex-wrap items-center gap-2">
+          <Badge className="rounded-none border border-border bg-transparent px-3 py-1 text-xs tracking-[0.18em] text-muted-foreground">
+            {profile.roleLine}
+          </Badge>
+          {profile.availableToMentor ? (
+            <Badge className="rounded-none border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs tracking-[0.12em] text-amber-700 dark:text-amber-300">
+              AVAILABLE TO MENTOR
+            </Badge>
+          ) : null}
+        </div>
         <h1 className="font-display max-w-4xl text-[2.4rem] font-semibold uppercase leading-[0.92] tracking-[0.16em] md:-ml-2 md:text-[5rem] md:tracking-[0.22em]">
           {words.map((word, index) => (
             <span key={word} className="block overflow-hidden">

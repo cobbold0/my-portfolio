@@ -3,6 +3,8 @@ export type AnalyticsEventName =
   | "page_engagement"
   | "section_engagement"
   | "home_scroll_bottom"
+  | "tool_open"
+  | "tool_action"
   | "navigation_click"
   | "click_project"
   | "project_view"

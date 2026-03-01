@@ -10,6 +10,7 @@ export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
   timezone,
   email,
   phone,
+  availableToMentor,
   socials[]{label, href},
   primaryCtas,
   metrics[]{label, value},

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { consumeNavigationContext, trackEvent } from "@/lib/analytics";
+import { classifyTrafficSource, getReferrerHostSafe } from "@/lib/traffic-source";
 
 export function PageViewTracker() {
   const pathname = usePathname();
@@ -10,7 +11,26 @@ export function PageViewTracker() {
 
   useEffect(() => {
     const navContext = consumeNavigationContext() || "direct_or_unknown";
+    const referrer = typeof document !== "undefined" ? document.referrer || "" : "";
+    const currentHost = typeof window !== "undefined" ? window.location.hostname.toLowerCase() : "";
+    const trafficSource = classifyTrafficSource(navContext, referrer, currentHost);
+    const referrerHost = getReferrerHostSafe(referrer);
+
     trackEvent({ name: "page_view", properties: { pathname, nav_context: navContext } });
+
+    if (pathname.startsWith("/tools")) {
+      const tool = pathname.split("/")[2] || "index";
+      trackEvent({
+        name: "tool_open",
+        properties: {
+          tool,
+          pathname,
+          nav_context: navContext,
+          traffic_source: trafficSource,
+          referrer_host: referrerHost
+        }
+      });
+    }
 
     const startedAt = Date.now();
     let maxScrollPercent = 0;

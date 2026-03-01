@@ -142,6 +142,7 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
     timezone?: string;
     email?: string;
     phone?: string;
+    availableToMentor?: boolean;
     socials?: SiteSettingsData["socials"];
     metrics?: SiteSettingsData["metrics"];
     linkedinEndorsements?: SiteSettingsData["linkedinEndorsements"];
@@ -162,6 +163,7 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
     timezone: data.timezone || localProfile.timezone,
     email: data.email || localProfile.email,
     phone: data.phone,
+    availableToMentor: Boolean(data.availableToMentor),
     socials: data.socials?.length ? data.socials : localSocials,
     metrics: data.metrics?.length ? data.metrics : localMetrics,
     linkedinEndorsements: data.linkedinEndorsements?.length ? data.linkedinEndorsements : localLinkedInEndorsements,

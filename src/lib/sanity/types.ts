@@ -11,6 +11,7 @@ export type SiteSettingsData = {
   timezone: string;
   email: string;
   phone?: string;
+  availableToMentor?: boolean;
   socials: SocialLink[];
   metrics: Metric[];
   linkedinEndorsements: {
