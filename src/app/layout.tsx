@@ -57,6 +57,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="google-site-verification" content="TN__nsPxDLPfDu7OgtPqpPogU5mWj_5sT28vbZRYmbU" />
+      </head>
       <body className={`${sansFont.variable} ${displayFont.variable} min-h-screen font-sans`}>
         <ThemeProvider>
           <MagneticCursor />
