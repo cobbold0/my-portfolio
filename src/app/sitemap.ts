@@ -5,7 +5,7 @@ import { getProjectsData } from "@/lib/content";
 import { tools } from "@/lib/tools";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [blogSlugs, projects] = await Promise.all([getAllPostSlugs(), getProjectsData()]);
+  const [blogSlugs, projects] = await Promise.all([getAllPostSlugs().catch(() => []), getProjectsData().catch(() => [])]);
   const now = new Date();
 
   const staticPages = ["", "/about", "/skills", "/tools", "/projects", "/blog", "/resume", "/contact"].map((path) => ({
