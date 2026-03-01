@@ -137,6 +137,7 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
     roleLine?: string;
     tagline?: string;
     bio?: string;
+    profileImage?: SanityImage;
     location?: string;
     timezone?: string;
     email?: string;
@@ -156,6 +157,7 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
     roleLine: data.roleLine || localProfile.roleLine,
     tagline: data.tagline || localProfile.tagline,
     shortBio: data.bio || localProfile.shortBio,
+    profileImage: urlForImage(data.profileImage) || undefined,
     location: data.location || localProfile.location,
     timezone: data.timezone || localProfile.timezone,
     email: data.email || localProfile.email,

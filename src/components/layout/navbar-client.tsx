@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Github, Instagram, Linkedin, Menu, Store, Twitter } from "lucide-react";
 import { setNavigationContext, trackEvent } from "@/lib/analytics";
 import type { SocialLink } from "@/lib/types";
@@ -13,6 +14,7 @@ import { lockStudioAction } from "@/app/studio/actions";
 
 const navItems = [
   { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/blog", label: "Blog" },
   { href: "/resume", label: "Resume" },
@@ -22,6 +24,14 @@ const navItems = [
 export function NavbarClient({ name, socials }: { name: string; socials: SocialLink[] }) {
   const pathname = usePathname();
   const isStudioRoute = pathname.startsWith("/studio");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const iconMap = {
     GitHub: Github,
@@ -33,7 +43,11 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
+    <header
+      className={`sticky top-0 z-40 border-b transition-all duration-300 ${
+        scrolled ? "border-border bg-background/80 backdrop-blur-md" : "border-transparent bg-transparent backdrop-blur-0"
+      }`}
+    >
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="font-semibold tracking-tight">
           {name}

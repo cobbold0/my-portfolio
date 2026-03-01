@@ -13,6 +13,13 @@ export default defineType({
     defineField({ name: "roleLine", type: "string", initialValue: "Backend • Frontend • Mobile" }),
     defineField({ name: "tagline", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "bio", type: "text", rows: 4, validation: (Rule) => Rule.required() }),
+    defineField({
+      name: "profileImage",
+      title: "Profile Image",
+      type: "image",
+      options: { hotspot: true },
+      description: "Displayed on the home page hero."
+    }),
     defineField({ name: "location", type: "string" }),
     defineField({ name: "timezone", type: "string" }),
     defineField({ name: "email", type: "string" }),

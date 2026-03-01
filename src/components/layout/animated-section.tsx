@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { sectionTransition, sectionVariants } from "@/lib/motion";
 
 export function AnimatedSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const reduceMotion = useReducedMotion();
@@ -11,10 +12,11 @@ export function AnimatedSection({ children, delay = 0 }: { children: React.React
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={sectionVariants}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.35, delay }}
+      transition={sectionTransition(delay)}
     >
       {children}
     </motion.div>

@@ -5,6 +5,7 @@ export const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
   roleLine,
   tagline,
   bio,
+  profileImage,
   location,
   timezone,
   email,
