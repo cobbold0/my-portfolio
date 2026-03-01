@@ -19,6 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(siteConfig.url),
+    alternates: {
+      canonical: "/"
+    },
     title: {
       default: title,
       template: `%s | ${title}`
@@ -41,6 +44,10 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
       type: "website"
     },
+    robots: {
+      index: true,
+      follow: true
+    },
     twitter: {
       card: "summary_large_image",
       title,
@@ -61,10 +68,29 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        name: "Augustine Cobbold Portfolio",
+        url: siteConfig.url,
+        description: siteConfig.description
+      },
+      {
+        "@type": "Person",
+        name: "Augustine Cobbold",
+        url: siteConfig.url,
+        jobTitle: "Software Engineer"
+      }
+    ]
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="TN__nsPxDLPfDu7OgtPqpPogU5mWj_5sT28vbZRYmbU" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </head>
       <body className={`${sansFont.variable} ${displayFont.variable} min-h-screen font-sans`}>
         <ThemeProvider>
