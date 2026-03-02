@@ -7,6 +7,7 @@ import { Github, Instagram, Linkedin, Menu, Store, Twitter } from "lucide-react"
 import { setNavigationContext, trackEvent } from "@/lib/analytics";
 import type { SocialLink } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { DialogTitle } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -27,6 +28,7 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
   const pathname = usePathname();
   const isStudioRoute = pathname.startsWith("/studio");
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -129,19 +131,21 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
             </form>
           ) : null}
           <ThemeToggle />
-          <Sheet>
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="Open navigation menu">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent className="space-y-4 p-6">
+              <DialogTitle className="sr-only">Mobile navigation menu</DialogTitle>
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   className="block text-sm font-medium"
                   onClick={() => {
+                    setMobileMenuOpen(false);
                     setNavigationContext(`navbar_mobile:${item.href}`);
                     trackEvent({
                       name: "navigation_click",
@@ -154,7 +158,13 @@ export function NavbarClient({ name, socials }: { name: string; socials: SocialL
               ))}
               {isStudioRoute ? (
                 <form action={lockStudioAction}>
-                  <button type="submit" className="block text-sm font-medium">
+                  <button
+                    type="submit"
+                    className="block text-sm font-medium"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                    }}
+                  >
                     Lock Studio
                   </button>
                 </form>
