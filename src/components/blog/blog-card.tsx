@@ -29,7 +29,7 @@ export function BlogCard({ post, sourceSurface = "unknown" }: { post: BlogPostMe
         <CardTitle className="text-lg">
           <Link
             href={`/blog/${post.slug}`}
-            className="hover:underline"
+            className="underline"
             onClick={() => {
               setNavigationContext(`${sourceSurface}:blog_card:${post.slug}`);
               trackEvent({ name: "click_blog", properties: { slug: post.slug, source: sourceSurface } });

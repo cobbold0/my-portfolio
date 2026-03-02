@@ -61,14 +61,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </Link>
 
       <article className="mt-6 grid gap-10 lg:grid-cols-[2fr_1fr]">
-        <div>
-          <Image
-            src={post.frontmatter.coverImage || "/projects/placeholder.svg"}
-            alt={post.frontmatter.title}
-            width={1200}
-            height={675}
-            className="h-auto w-full rounded-xl border object-cover"
-          />
+        <div className="order-2 lg:order-1">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border bg-muted/20">
+            <Image
+              src={post.frontmatter.coverImage || "/projects/placeholder.svg"}
+              alt={post.frontmatter.title}
+              fill
+              priority
+              sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 3rem), calc((100vw - 8rem) * 0.66)"
+              className="object-cover"
+            />
+          </div>
           <h1 className="mt-6 text-4xl font-bold tracking-tight">{post.frontmatter.title}</h1>
           <div className="mt-4 flex flex-wrap gap-2">
             {post.frontmatter.tags.map((tag) => (
@@ -106,7 +109,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <div className="prose prose-slate dark:prose-invert mt-8 max-w-none">{post.content}</div>
           )}
         </div>
-        <div className="space-y-4">
+        <div className="order-1 space-y-4 lg:order-2">
           <TableOfContents items={post.headings} />
         </div>
       </article>

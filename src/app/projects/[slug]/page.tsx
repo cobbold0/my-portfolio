@@ -119,7 +119,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       </div>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[2fr_1fr]">
-        <div className="space-y-8">
+        <div className="min-w-0 space-y-8">
           <section>
             <h2 className="text-xl font-semibold">Problem</h2>
             <p className="mt-2 text-muted-foreground">{project.problem}</p>
@@ -130,10 +130,10 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <p className="mt-2 text-muted-foreground">{project.solution}</p>
           </section>
 
-          <section>
+          <section className="min-w-0">
             <h2 className="text-xl font-semibold">Architecture</h2>
-            <Card className="mt-3">
-              <CardContent className="pt-6">
+            <Card className="mt-3 w-full max-w-full overflow-x-auto">
+              <CardContent className="min-w-0 pt-6">
                 <p className="mb-3 text-sm font-medium">{project.architecture.title}</p>
                 <MermaidDiagram chart={project.architecture.mermaid} />
               </CardContent>
