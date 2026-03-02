@@ -86,6 +86,25 @@ export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][
   shareOnLinkedIn
 }`;
 
+export const appPoliciesQuery = groq`*[_type == "appPolicy" && coalesce(isPublished, true) == true] | order(appName asc, policyType asc){
+  title,
+  appName,
+  "appSlug": appSlug.current,
+  policyType,
+  summary,
+  lastUpdated
+}`;
+
+export const appPolicyByAppAndTypeQuery = groq`*[_type == "appPolicy" && coalesce(isPublished, true) == true && appSlug.current == $appSlug && policyType == $policyType][0]{
+  title,
+  appName,
+  "appSlug": appSlug.current,
+  policyType,
+  summary,
+  lastUpdated,
+  body
+}`;
+
 export const experienceQuery = groq`*[_type == "experience"] | order(startDate desc){
   company,
   role,

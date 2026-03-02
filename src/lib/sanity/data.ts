@@ -7,6 +7,8 @@ import { testimonials as localTestimonials } from "@/content/testimonials";
 import type { Project, SkillGroup, SkillItem, SkillStrength } from "@/lib/types";
 import { client, dataset, projectId } from "@/lib/sanity/client";
 import {
+  appPoliciesQuery,
+  appPolicyByAppAndTypeQuery,
   experienceQuery,
   postBySlugQuery,
   postsQuery,
@@ -16,7 +18,15 @@ import {
   siteSettingsQuery,
   testimonialsQuery
 } from "@/lib/sanity/queries";
-import type { BlogPostDetail, BlogPostMeta, ExperienceData, SiteSettingsData, TestimonialData } from "@/lib/sanity/types";
+import type {
+  AppPolicyDetail,
+  AppPolicyMeta,
+  BlogPostDetail,
+  BlogPostMeta,
+  ExperienceData,
+  SiteSettingsData,
+  TestimonialData
+} from "@/lib/sanity/types";
 import { urlForImage } from "@/lib/sanity/image";
 
 function hasSanityConfig() {
@@ -70,6 +80,16 @@ type SanitySkill = {
   level?: number;
   categoryLevel?: string;
   order?: number;
+};
+
+type SanityAppPolicy = {
+  title: string;
+  appName: string;
+  appSlug: string;
+  policyType: string;
+  summary?: string;
+  lastUpdated?: string;
+  body?: unknown[];
 };
 
 function mapSanityProject(project: SanityProject): Project {
@@ -245,6 +265,43 @@ export async function getPostBySlugFromSanity(slug: string): Promise<BlogPostDet
   };
 }
 
+export async function getAllAppPoliciesFromSanity(): Promise<AppPolicyMeta[]> {
+  if (!hasSanityConfig()) return [];
+
+  const data = await client.fetch<SanityAppPolicy[]>(appPoliciesQuery, {}, { next: { tags: ["policies"] } });
+  const policies = data || [];
+  return policies.map((policy) => ({
+    title: policy.title,
+    appName: policy.appName,
+    appSlug: policy.appSlug,
+    policyType: policy.policyType,
+    summary: policy.summary,
+    lastUpdated: policy.lastUpdated
+  }));
+}
+
+export async function getAppPolicyBySlugFromSanity(appSlug: string, policyType: string): Promise<AppPolicyDetail | null> {
+  if (!hasSanityConfig()) return null;
+
+  const policy = await client.fetch<SanityAppPolicy | null>(
+    appPolicyByAppAndTypeQuery,
+    { appSlug, policyType },
+    { next: { tags: ["policies", `policy:${appSlug}:${policyType}`] } }
+  );
+  if (!policy) return null;
+
+  return {
+    title: policy.title,
+    appName: policy.appName,
+    appSlug: policy.appSlug,
+    policyType: policy.policyType,
+    summary: policy.summary,
+    lastUpdated: policy.lastUpdated,
+    body: policy.body || [],
+    headings: portableTextHeadings(policy.body || [])
+  };
+}
+
 export async function getExperienceFromSanity(): Promise<ExperienceData[]> {
   if (!hasSanityConfig()) return [];
 
@@ -359,4 +416,3 @@ export function getLocalDefaults() {
     skills: localSkills
   };
 }
-

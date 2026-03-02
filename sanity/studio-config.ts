@@ -15,6 +15,7 @@ const structure = (S: StructureBuilder) =>
       S.divider(),
       S.listItem().title("Projects").child(S.documentTypeList("project").title("Projects")),
       S.listItem().title("Blog Posts").child(S.documentTypeList("post").title("Blog Posts")),
+      S.listItem().title("App Policies").child(S.documentTypeList("appPolicy").title("App Policies")),
       S.listItem().title("Experience").child(S.documentTypeList("experience").title("Experience")),
       S.listItem().title("Testimonials").child(S.documentTypeList("testimonial").title("Testimonials")),
       S.listItem().title("Skills").child(S.documentTypeList("skill").title("Skills"))

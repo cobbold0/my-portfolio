@@ -2,10 +2,15 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site";
 import { getAllPostSlugs } from "@/lib/blog";
 import { getProjectsData } from "@/lib/content";
+import { getAllAppPolicyParams } from "@/lib/policies";
 import { tools } from "@/lib/tools";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [blogSlugs, projects] = await Promise.all([getAllPostSlugs().catch(() => []), getProjectsData().catch(() => [])]);
+  const [blogSlugs, projects, policies] = await Promise.all([
+    getAllPostSlugs().catch(() => []),
+    getProjectsData().catch(() => []),
+    getAllAppPolicyParams().catch(() => [])
+  ]);
   const now = new Date();
 
   const staticPages = ["", "/about", "/skills", "/tools", "/projects", "/blog", "/resume", "/contact"].map((path) => ({
@@ -36,5 +41,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6
   }));
 
-  return [...staticPages, ...toolPages, ...projectPages, ...blogPages];
+  const policyPages = policies.map(({ app, policy }) => ({
+    url: `${siteConfig.url}/${app}/${policy}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.5
+  }));
+
+  return [...staticPages, ...toolPages, ...projectPages, ...blogPages, ...policyPages];
 }
