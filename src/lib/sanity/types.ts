@@ -74,3 +74,17 @@ export type BlogPostDetail = {
 };
 
 export type ProjectData = Project;
+
+export type AppPolicyMeta = {
+  title: string;
+  appName: string;
+  appSlug: string;
+  policyType: string;
+  summary?: string;
+  lastUpdated?: string;
+};
+
+export type AppPolicyDetail = AppPolicyMeta & {
+  body: unknown[];
+  headings: { text: string; id: string }[];
+};

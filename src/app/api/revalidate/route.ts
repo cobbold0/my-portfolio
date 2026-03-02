@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 type WebhookPayload = {
   _type?: string;
   slug?: { current?: string };
+  appSlug?: { current?: string };
+  policyType?: string;
   documentId?: string;
 };
 
@@ -40,6 +42,12 @@ function tagsForPayload(payload: WebhookPayload) {
     case "skill":
       tags.add("skills");
       break;
+    case "appPolicy":
+      tags.add("policies");
+      if (payload.appSlug?.current && payload.policyType) {
+        tags.add(`policy:${payload.appSlug.current}:${payload.policyType}`);
+      }
+      break;
     default:
       tags.add("settings");
       tags.add("projects");
@@ -47,6 +55,7 @@ function tagsForPayload(payload: WebhookPayload) {
       tags.add("experience");
       tags.add("testimonials");
       tags.add("skills");
+      tags.add("policies");
   }
 
   return [...tags];
