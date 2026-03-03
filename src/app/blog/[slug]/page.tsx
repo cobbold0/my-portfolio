@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 import { getAllPostSlugs, getPostBySlug, getPostMeta } from "@/lib/blog";
 import { formatDateUtc } from "@/lib/date";
 import { Badge } from "@/components/ui/badge";
@@ -22,10 +22,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
       title: post.title,
       description: post.summary,
+      alternates: {
+        canonical: `/blog/${slug}`
+      },
       openGraph: {
+        title: post.title,
+        description: post.summary,
+        url: absoluteUrl(`/blog/${slug}`),
+        type: "article",
         images: [absoluteUrl(`/api/og?post=${slug}`)]
       },
       twitter: {
+        title: post.title,
+        description: post.summary,
         images: [absoluteUrl(`/api/og?post=${slug}`)]
       }
     };
@@ -45,9 +54,53 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(absoluteUrl(`/blog/${slug}`))}`;
+  const articleStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.frontmatter.title,
+    description: post.frontmatter.summary,
+    datePublished: post.frontmatter.date,
+    dateModified: post.frontmatter.date,
+    image: [absoluteUrl(post.frontmatter.coverImage || "/projects/placeholder.svg")],
+    mainEntityOfPage: absoluteUrl(`/blog/${slug}`),
+    author: {
+      "@type": "Person",
+      name: siteConfig.authors[0]?.name || siteConfig.name
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name
+    }
+  };
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: absoluteUrl("/blog")
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.frontmatter.title,
+        item: absoluteUrl(`/blog/${slug}`)
+      }
+    ]
+  };
 
   return (
     <div className="container py-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleStructuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }} />
       <Link
         href="/blog"
         className="text-sm text-muted-foreground hover:text-foreground"
