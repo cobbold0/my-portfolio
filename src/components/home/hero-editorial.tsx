@@ -56,6 +56,7 @@ export function HeroEditorial({ profile, linkedinProfile }: HeroEditorialProps) 
             </Badge>
           ) : null}
         </div>
+        <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{profile.name}</p>
         <h1 className="font-display max-w-4xl text-[2.4rem] font-semibold uppercase leading-[0.92] tracking-[0.16em] md:-ml-2 md:text-[5rem] md:tracking-[0.22em]">
           {words.map((word, index) => (
             <span key={word} className="block overflow-hidden">
@@ -95,7 +96,7 @@ export function HeroEditorial({ profile, linkedinProfile }: HeroEditorialProps) 
 
       {profile.profileImage ? (
         <div className="relative z-10 mx-auto w-full max-w-[320px] lg:mx-0 lg:justify-self-end">
-          <div className="overflow-hidden border border-border bg-background dark:bg-primary">
+          <div className="overflow-hidden border border-border bg-primary">
             <Image
               src={profile.profileImage}
               alt={`${profile.name} profile picture`}

@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { absoluteUrl } from "@/lib/site";
 import { getProjectsData, getSiteProfile, getSkillsData, getTestimonialsData } from "@/lib/content";
 import { getAllPostsMeta } from "@/lib/blog";
 import { getGitHubProfile, getGitHubUsernameFromUrl } from "@/lib/github";
@@ -15,6 +17,20 @@ import { FocusProjectGrid } from "@/components/home/focus-project-grid";
 import { StatsSnap } from "@/components/home/stats-snap";
 import { TestimonialsDialog } from "@/components/home/testimonials-dialog";
 import { DrawBorder } from "@/components/ui/draw-border";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "Backend, frontend, and mobile engineering portfolio with case studies, writing, and developer tools.",
+  alternates: {
+    canonical: "/"
+  },
+  openGraph: {
+    images: [absoluteUrl("/api/og?page=home")]
+  },
+  twitter: {
+    images: [absoluteUrl("/api/og?page=home")]
+  }
+};
 
 export default async function HomePage() {
   const profile = await getSiteProfile();

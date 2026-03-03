@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Github, Globe, Play } from "lucide-react";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 import { getProjectDataBySlug, getProjectsData } from "@/lib/content";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,10 +26,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: project.title,
     description: project.summary,
+    alternates: {
+      canonical: `/projects/${project.slug}`
+    },
     openGraph: {
+      title: project.title,
+      description: project.summary,
+      url: absoluteUrl(`/projects/${project.slug}`),
       images: [absoluteUrl(`/api/og?page=project-${project.slug}`)]
     },
     twitter: {
+      title: project.title,
+      description: project.summary,
       images: [absoluteUrl(`/api/og?page=project-${project.slug}`)]
     }
   };
@@ -42,9 +50,48 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   if (!project) {
     notFound();
   }
+  const projectStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.summary,
+    url: absoluteUrl(`/projects/${project.slug}`),
+    image: project.screenshots.length > 0 ? project.screenshots.map((shot) => absoluteUrl(shot.src)) : [absoluteUrl("/projects/placeholder.svg")],
+    creator: {
+      "@type": "Person",
+      name: siteConfig.authors[0]?.name || siteConfig.name
+    },
+    keywords: project.techStack.join(", ")
+  };
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Projects",
+        item: absoluteUrl("/projects")
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.title,
+        item: absoluteUrl(`/projects/${project.slug}`)
+      }
+    ]
+  };
 
   return (
     <div className="container py-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectStructuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }} />
       <Link
         href="/projects"
         className="text-sm text-muted-foreground hover:text-foreground"
@@ -58,6 +105,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       </Link>
       <h1 className="mt-4 text-3xl font-bold tracking-tight">{project.title}</h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">{project.summary}</p>
+      <p className="mt-2 text-sm text-muted-foreground">Built by Augustine Cobbold</p>
 
       <div className="mt-6 flex flex-wrap gap-2">
         {project.techStack.map((item) => (
