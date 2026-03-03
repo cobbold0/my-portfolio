@@ -136,6 +136,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <p className="mt-3 text-sm text-muted-foreground">
             {formatDateUtc(post.frontmatter.date)} - {post.readingTime}
           </p>
+          <p className="mt-1 text-sm text-muted-foreground">By Augustine Cobbold</p>
           {post.shareOnLinkedIn ? (
             <div className="mt-4">
               <Button asChild variant="outline">

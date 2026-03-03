@@ -56,6 +56,7 @@ export function HeroEditorial({ profile, linkedinProfile }: HeroEditorialProps) 
             </Badge>
           ) : null}
         </div>
+        <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{profile.name}</p>
         <h1 className="font-display max-w-4xl text-[2.4rem] font-semibold uppercase leading-[0.92] tracking-[0.16em] md:-ml-2 md:text-[5rem] md:tracking-[0.22em]">
           {words.map((word, index) => (
             <span key={word} className="block overflow-hidden">

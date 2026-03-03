@@ -14,8 +14,19 @@ import { displayFont, sansFont } from "@/lib/fonts";
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await getSiteProfile();
-  const title = profile.seo?.title || `${profile.name} Portfolio`;
+  const rawTitle = profile.seo?.title || `${profile.name} Portfolio`;
+  const title = rawTitle.toLowerCase().includes(profile.name.toLowerCase()) ? rawTitle : `${rawTitle} | ${profile.name}`;
   const description = profile.seo?.description || siteConfig.description;
+  const brandedKeywords = Array.from(
+    new Set([
+      ...siteConfig.keywords,
+      profile.name,
+      `${profile.name} portfolio`,
+      profile.name.split(" ").reverse().join(" "),
+      "Agustine Cobbold",
+      "Augusine Cobbold"
+    ])
+  );
 
   return {
     metadataBase: new URL(siteConfig.url),
@@ -24,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${title}`
     },
     description,
-    keywords: siteConfig.keywords,
+    keywords: brandedKeywords,
     authors: [{ name: profile.name }],
     openGraph: {
       title,
@@ -64,21 +75,40 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const profile = await getSiteProfile();
+  const socialLinks = profile.socials.map((social) => social.href);
+  const canonicalName = profile.name;
+  const givenName = canonicalName.split(" ")[0] || canonicalName;
+  const familyName = canonicalName.split(" ").slice(1).join(" ") || undefined;
+  const profileImage = profile.profileImage
+    ? profile.profileImage.startsWith("http")
+      ? profile.profileImage
+      : absoluteUrl(profile.profileImage)
+    : undefined;
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "WebSite",
-        name: "Augustine Cobbold Portfolio",
+        name: `${canonicalName} Portfolio`,
         url: siteConfig.url,
         description: siteConfig.description
       },
       {
         "@type": "Person",
-        name: "Augustine Cobbold",
+        name: canonicalName,
+        givenName,
+        familyName,
+        alternateName: [
+          "Agustine Cobbold",
+          "Augusine Cobbold",
+          familyName ? `${familyName} ${givenName}` : undefined
+        ].filter(Boolean),
         url: siteConfig.url,
-        jobTitle: "Software Engineer"
+        jobTitle: profile.roleLine || "Software Engineer",
+        image: profileImage,
+        sameAs: socialLinks
       }
     ]
   };
@@ -87,6 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="TN__nsPxDLPfDu7OgtPqpPogU5mWj_5sT28vbZRYmbU" />
+        <meta name="yandex-verification" content="e31be8045dd48940" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </head>
       <body className={`${sansFont.variable} ${displayFont.variable} min-h-screen font-sans`}>

@@ -105,6 +105,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       </Link>
       <h1 className="mt-4 text-3xl font-bold tracking-tight">{project.title}</h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">{project.summary}</p>
+      <p className="mt-2 text-sm text-muted-foreground">Built by Augustine Cobbold</p>
 
       <div className="mt-6 flex flex-wrap gap-2">
         {project.techStack.map((item) => (
