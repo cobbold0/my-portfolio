@@ -276,6 +276,47 @@ Email/fallback behavior:
 
 Limitation: in-memory rate limiting resets on restart and does not synchronize across multiple instances.
 
+## Search Engine Indexing and SEO Status
+
+### Search Engines Completed
+
+- Google Search Console
+- Bing Webmaster Tools
+- Brave Search
+- DuckDuckGo (Bing-backed coverage)
+- Yahoo/Ecosia and other Bing-backed engines (inherited through Bing indexing)
+- Yandex Webmaster
+
+### Verification Files
+
+- Google verification file: `public/googlef73705603b60270a.html`
+- Yandex verification file: `public/yandex_e31be8045dd48940.html`
+
+These files must live in `public/` so they resolve at root URLs:
+
+- `/googlef73705603b60270a.html`
+- `/yandex_e31be8045dd48940.html`
+
+### SEO Improvements Implemented in Code
+
+- Canonical handling fixed:
+  - Removed global `"/"` canonical from root metadata.
+  - Added route-level canonical tags for home, blog detail, and project detail pages.
+- Metadata strengthened:
+  - Homepage metadata added with explicit canonical and OG/Twitter image.
+  - Blog/project detail metadata includes richer OG/Twitter fields.
+- Structured data expanded:
+  - Global `WebSite` + `Person` schema in layout.
+  - Added `Article` + `BreadcrumbList` schema on blog detail pages.
+  - Added `CreativeWork` + `BreadcrumbList` schema on project detail pages.
+- Branded SEO signals added:
+  - Added strong name variants in metadata keywords.
+  - Expanded `Person` schema with `alternateName` misspellings and `sameAs` social links.
+  - Added visible author/creator attribution text on blog/project detail pages.
+- Sitemap quality improved:
+  - Blog URLs now use post dates for `lastModified`.
+  - Project URLs now use project year-derived dates for `lastModified`.
+
 ## Deploy Notes
 
 ### Next.js app (Vercel)

@@ -43,6 +43,10 @@ export default async function HomePage() {
   const githubProfile = await getGitHubProfile(githubUsername);
   const linkedinUrl = profile.socials.find((social) => social.label.toLowerCase() === "linkedin")?.href;
   const linkedinProfile = getLinkedInProfileFromUrl(linkedinUrl);
+  const playStoreUrl = profile.socials.find((social) => {
+    const label = social.label.toLowerCase();
+    return label === "play store" || label === "google play" || social.href.includes("play.google.com");
+  })?.href;
   const spotlightSkills = skills
     .filter((item) => ["Mobile", "Frontend", "Backend"].includes(item.category))
 
@@ -51,7 +55,7 @@ export default async function HomePage() {
       <section className="hero-grid overflow-x-clip border-b" data-analytics-section="home_hero">
         <div className="container py-48">
           <AnimatedSection delay={0.03}>
-            <HeroEditorial profile={profile} linkedinProfile={linkedinProfile} />
+            <HeroEditorial profile={profile} linkedinProfile={linkedinProfile} playStoreUrl={playStoreUrl} />
           </AnimatedSection>
         </div>
       </section>
