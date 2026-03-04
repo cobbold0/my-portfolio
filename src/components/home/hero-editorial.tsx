@@ -18,11 +18,12 @@ type HeroEditorialProps = {
     profileImage?: string;
   };
   linkedinProfile: { vanity: string; profileUrl: string } | null;
+  playStoreUrl?: string;
 };
 
 const words = ["Engineering", "Digital", "Experiences"];
 
-export function HeroEditorial({ profile, linkedinProfile }: HeroEditorialProps) {
+export function HeroEditorial({ profile, linkedinProfile, playStoreUrl }: HeroEditorialProps) {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 120, damping: 22, mass: 0.6 });
@@ -86,6 +87,22 @@ export function HeroEditorial({ profile, linkedinProfile }: HeroEditorialProps) 
               Download CV <Download className="h-4 w-4" />
             </Link>
           </Button>
+          {playStoreUrl ? (
+            <Button asChild variant="outline" className="rounded-none border-emerald-600/40 px-6" data-magnetic>
+              <a
+                href={playStoreUrl}
+                target="_blank"
+                rel="noreferrer"
+                data-analytics-event="social_click"
+                data-analytics-source="home_hero"
+                data-analytics-label="Play Store"
+                data-analytics-target={playStoreUrl}
+              >
+                <Image src="/icons/playstore-icon.svg" alt="" width={18} height={18} aria-hidden="true" />
+                Play Store
+              </a>
+            </Button>
+          ) : null}
         </div>
         {linkedinProfile ? (
           <div className="mt-8 max-w-sm border-l border-border pl-4">
