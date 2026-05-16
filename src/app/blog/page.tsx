@@ -3,7 +3,7 @@ import { absoluteUrl } from "@/lib/site";
 import { getAllPostsMeta } from "@/lib/blog";
 import { BlogClient } from "@/components/blog/blog-client";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Blog",

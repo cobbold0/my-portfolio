@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+
 type GitHubUserResponse = {
   login: string;
   name: string | null;
@@ -77,7 +79,7 @@ async function fetchGraphQL<T>(query: string, variables: Record<string, unknown>
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ query, variables }),
-    cache: "no-store"
+    next: { revalidate: 3600, tags: ["github"] }
   });
 
   if (!response.ok) return null;
@@ -246,7 +248,7 @@ async function getViewerProfileFromGraphQL(token: string) {
   } satisfies GitHubProfile;
 }
 
-export async function getGitHubProfile(username?: string | null): Promise<GitHubProfile | null> {
+async function getGitHubProfileUncached(username: string): Promise<GitHubProfile | null> {
   if (!username) return null;
 
   const token = process.env.GITHUB_TOKEN;
@@ -261,7 +263,7 @@ export async function getGitHubProfile(username?: string | null): Promise<GitHub
     headers: {
       Accept: "application/vnd.github+json"
     },
-    cache: "no-store"
+    next: { revalidate: 3600, tags: ["github"] }
   });
 
   if (!response.ok) return null;
@@ -280,4 +282,14 @@ export async function getGitHubProfile(username?: string | null): Promise<GitHub
     contributionsByYear: [],
     recentCommits: []
   };
+}
+
+const getGitHubProfileCached = unstable_cache(getGitHubProfileUncached, ["github-profile"], {
+  revalidate: 3600,
+  tags: ["github"]
+});
+
+export async function getGitHubProfile(username?: string | null): Promise<GitHubProfile | null> {
+  if (!username) return null;
+  return getGitHubProfileCached(username);
 }

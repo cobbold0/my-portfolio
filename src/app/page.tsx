@@ -16,19 +16,26 @@ import { StatsSnap } from "@/components/home/stats-snap";
 import { TestimonialsDialog } from "@/components/home/testimonials-dialog";
 import { DrawBorder } from "@/components/ui/draw-border";
 
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, fallback: T): Promise<T> {
+  return Promise.race([promise, new Promise<T>((resolve) => setTimeout(() => resolve(fallback), timeoutMs))]);
+}
+
 export default async function HomePage() {
-  const profile = await getSiteProfile();
-  const projects = await getProjectsData();
-  const testimonials = await getTestimonialsData();
-  const skills = await getSkillsData();
-  const posts = (await getAllPostsMeta()).slice(0, 3);
+  const [profile, projects, testimonials, skills, postMeta] = await Promise.all([
+    getSiteProfile(),
+    getProjectsData(),
+    getTestimonialsData(),
+    getSkillsData(),
+    getAllPostsMeta()
+  ]);
+  const posts = postMeta.slice(0, 3);
   const githubUrl = profile.socials.find((social) => social.label.toLowerCase() === "github")?.href;
   const githubUsername = getGitHubUsernameFromUrl(githubUrl);
-  const githubProfile = await getGitHubProfile(githubUsername);
+  const githubProfile = githubUsername ? await withTimeout(getGitHubProfile(githubUsername), 600, null) : null;
   const linkedinUrl = profile.socials.find((social) => social.label.toLowerCase() === "linkedin")?.href;
   const linkedinProfile = getLinkedInProfileFromUrl(linkedinUrl);
   const spotlightSkills = skills
-    .filter((item) => ["Mobile", "Frontend", "Backend"].includes(item.category))
+    .filter((item) => ["Mobile", "Frontend", "Backend"].includes(item.category));
 
   return (
     <div>
