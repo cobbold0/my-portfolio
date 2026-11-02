@@ -19,15 +19,24 @@ import { TestimonialsDialog } from "@/components/home/testimonials-dialog";
 import { DrawBorder } from "@/components/ui/draw-border";
 
 export const metadata: Metadata = {
-  title: "Home",
-  description: "Backend, frontend, and mobile engineering portfolio with case studies, writing, and developer tools.",
+  title: {
+    absolute: "Augustine Cobbold | Software Engineer & Mobile/Frontend Specialist"
+  },
+  description:
+    "Engineering portfolio of Augustine Cobbold. Specializing in Android, React Native, Next.js, and offline-first mobile architecture with case studies, writing, and developer tools.",
   alternates: {
     canonical: "/"
   },
   openGraph: {
+    title: "Augustine Cobbold | Software Engineer & Mobile/Frontend Specialist",
+    description:
+      "Engineering portfolio of Augustine Cobbold. Specializing in Android, React Native, Next.js, and offline-first mobile architecture with case studies, writing, and developer tools.",
     images: [absoluteUrl("/api/og?page=home")]
   },
   twitter: {
+    title: "Augustine Cobbold | Software Engineer & Mobile/Frontend Specialist",
+    description:
+      "Engineering portfolio of Augustine Cobbold. Specializing in Android, React Native, Next.js, and offline-first mobile architecture with case studies, writing, and developer tools.",
     images: [absoluteUrl("/api/og?page=home")]
   }
 };

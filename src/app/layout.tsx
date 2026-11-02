@@ -90,25 +90,44 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebSite",
+        "@type": "ProfilePage",
+        "@id": `${siteConfig.url}/#profilepage`,
+        url: siteConfig.url,
         name: `${canonicalName} Portfolio`,
-        url: siteConfig.url,
-        description: siteConfig.description
-      },
-      {
-        "@type": "Person",
-        name: canonicalName,
-        givenName,
-        familyName,
-        alternateName: [
-          "Agustine Cobbold",
-          "Augusine Cobbold",
-          familyName ? `${familyName} ${givenName}` : undefined
-        ].filter(Boolean),
-        url: siteConfig.url,
-        jobTitle: profile.roleLine || "Software Engineer",
-        image: profileImage,
-        sameAs: socialLinks
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${siteConfig.url}/#website`,
+          url: siteConfig.url,
+          name: `${canonicalName} Portfolio`,
+          description: siteConfig.description
+        },
+        mainEntity: {
+          "@type": "Person",
+          "@id": `${siteConfig.url}/#person`,
+          name: canonicalName,
+          givenName,
+          familyName,
+          alternateName: [
+            "Agustine Cobbold",
+            "Augusine Cobbold",
+            familyName ? `${familyName} ${givenName}` : undefined
+          ].filter(Boolean),
+          url: siteConfig.url,
+          jobTitle: profile.roleLine || "Software Engineer",
+          image: profileImage,
+          sameAs: socialLinks,
+          knowsAbout: [
+            "Android Development",
+            "Kotlin",
+            "React Native",
+            "Next.js",
+            "TypeScript",
+            "Mobile Offline Sync Architecture",
+            "Node.js",
+            "Tailwind CSS",
+            "PostgreSQL"
+          ]
+        }
       }
     ]
   };

@@ -1,0 +1,27 @@
+# Augustine Cobbold
+
+> Software Engineer specializing in Mobile Development (Android/Kotlin, React Native), Modern Web (Next.js, TypeScript), and Backend Architecture.
+
+## Key Profiles & Links
+- **Portfolio & Case Studies:** https://augustine.cobbold.dev
+- **GitHub:** https://github.com/cobbold0
+- **LinkedIn:** https://www.linkedin.com/in/augustinecobbold
+- **Google Play Developer:** https://play.google.com/store/apps/developer?id=Cobbold
+
+## Key Projects & Published Applications
+- **DevMock:** Network simulation and traffic control testing tool for Android developers.
+- **Dial Hash (Shortcodes):** USSD quick-dialing and offline transaction utility app.
+- **Circle Pay:** Digital rotational savings and cooperative finance platform.
+- **Nexgt Mall:** Multi-vendor African commerce platform.
+- **Web Developer Utilities:** UUID Generator, JSON Formatter, JWT Decoder, and JS Sandbox at https://augustine.cobbold.dev/tools
+
+## Core Technical Competencies
+- **Mobile:** Android SDK, Kotlin, Java, Jetpack Compose, RoomDB, React Native, Expo, App Store & Google Play deployment.
+- **Frontend / Full-stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, shadcn/ui.
+- **Backend & Cloud:** Node.js, NestJS, PostgreSQL, Redis, Docker, Firebase, REST APIs.
+- **Architecture Specialization:** Resilient offline sync, queue-based data synchronization, conflict resolution, mobile security.
+
+## Technical Writing
+- **Designing Offline Sync for Mobile Field Apps:** Architecture patterns, local data storage, queue-based uploads, conflict resolution, and network-aware synchronization.
+- **Mobile Money Scams Are Rising: Here’s How to Protect Yourself:** Analysis of transaction fraud patterns and prevention in emerging markets.
+- **Roadmap to Become an Android Developer in 2026:** Modern learning and engineering path from fundamentals to production-ready Android systems.
