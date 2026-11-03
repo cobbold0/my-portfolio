@@ -18,6 +18,8 @@ import { StatsSnap } from "@/components/home/stats-snap";
 import { TestimonialsDialog } from "@/components/home/testimonials-dialog";
 import { DrawBorder } from "@/components/ui/draw-border";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: {
     absolute: "Augustine Cobbold | Software Engineer & Mobile/Frontend Specialist"

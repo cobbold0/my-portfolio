@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { TableOfContents } from "@/components/blog/toc";
 import { PortableTextRenderer } from "@/components/blog/portable-text";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const slugs = await getAllPostSlugs();
   return slugs.map((slug) => ({ slug }));

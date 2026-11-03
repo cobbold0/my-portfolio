@@ -33,6 +33,17 @@ function hasSanityConfig() {
   return Boolean(projectId && dataset);
 }
 
+const SANITY_REVALIDATE_SECONDS = 60;
+
+function fetchOptions(tags: string[]) {
+  return {
+    next: {
+      tags,
+      revalidate: SANITY_REVALIDATE_SECONDS
+    }
+  };
+}
+
 type SanityImage = {
   asset?: { _ref?: string };
 };
@@ -180,7 +191,7 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
     primaryCtas?: { resumeUrl?: string };
     resumeFileUrl?: string;
     resumeUrl?: string;
-  }>(siteSettingsQuery, {}, { next: { tags: ["settings"] } });
+  }>(siteSettingsQuery, {}, fetchOptions(["settings"]));
   if (!data) return null;
 
   return {
@@ -209,21 +220,21 @@ export async function getSiteSettingsFromSanity(): Promise<SiteSettingsData | nu
 export async function getProjectsFromSanity(): Promise<Project[]> {
   if (!hasSanityConfig()) return [];
 
-  const data = await client.fetch<SanityProject[]>(projectsQuery, {}, { next: { tags: ["projects"] } });
+  const data = await client.fetch<SanityProject[]>(projectsQuery, {}, fetchOptions(["projects"]));
   return data?.map(mapSanityProject) || [];
 }
 
 export async function getProjectBySlugFromSanity(slug: string): Promise<Project | null> {
   if (!hasSanityConfig()) return null;
 
-  const data = await client.fetch<SanityProject | null>(projectBySlugQuery, { slug }, { next: { tags: ["projects", `project:${slug}`] } });
+  const data = await client.fetch<SanityProject | null>(projectBySlugQuery, { slug }, fetchOptions(["projects", `project:${slug}`]));
   return data ? mapSanityProject(data) : null;
 }
 
 export async function getPostsMetaFromSanity(): Promise<BlogPostMeta[]> {
   if (!hasSanityConfig()) return [];
 
-  const data = await client.fetch<SanityPost[]>(postsQuery, {}, { next: { tags: ["posts"] } });
+  const data = await client.fetch<SanityPost[]>(postsQuery, {}, fetchOptions(["posts"]));
 
   const posts: SanityPost[] = data || [];
   return posts.map((post: SanityPost) => {
@@ -244,7 +255,7 @@ export async function getPostsMetaFromSanity(): Promise<BlogPostMeta[]> {
 export async function getPostBySlugFromSanity(slug: string): Promise<BlogPostDetail | null> {
   if (!hasSanityConfig()) return null;
 
-  const post = await client.fetch<SanityPost | null>(postBySlugQuery, { slug }, { next: { tags: ["posts", `post:${slug}`] } });
+  const post = await client.fetch<SanityPost | null>(postBySlugQuery, { slug }, fetchOptions(["posts", `post:${slug}`]));
   if (!post) return null;
 
   const text = portableTextToPlainText(post.body || []);
@@ -268,7 +279,7 @@ export async function getPostBySlugFromSanity(slug: string): Promise<BlogPostDet
 export async function getAllAppPoliciesFromSanity(): Promise<AppPolicyMeta[]> {
   if (!hasSanityConfig()) return [];
 
-  const data = await client.fetch<SanityAppPolicy[]>(appPoliciesQuery, {}, { next: { tags: ["policies"] } });
+  const data = await client.fetch<SanityAppPolicy[]>(appPoliciesQuery, {}, fetchOptions(["policies"]));
   const policies = data || [];
   return policies.map((policy) => ({
     title: policy.title,
@@ -286,7 +297,7 @@ export async function getAppPolicyBySlugFromSanity(appSlug: string, policyType: 
   const policy = await client.fetch<SanityAppPolicy | null>(
     appPolicyByAppAndTypeQuery,
     { appSlug, policyType },
-    { next: { tags: ["policies", `policy:${appSlug}:${policyType}`] } }
+    fetchOptions(["policies", `policy:${appSlug}:${policyType}`])
   );
   if (!policy) return null;
 
@@ -308,7 +319,7 @@ export async function getExperienceFromSanity(): Promise<ExperienceData[]> {
   const data = await client.fetch<Array<{ company: string; role: string; location?: string; startDate: string; endDate?: string; highlights?: string[]; techStack?: string[] }>>(
     experienceQuery,
     {},
-    { next: { tags: ["experience"] } }
+    fetchOptions(["experience"])
   );
 
   const items = data || [];
@@ -329,7 +340,7 @@ export async function getTestimonialsFromSanity(): Promise<TestimonialData[]> {
   const data = await client.fetch<Array<{ name: string; role: string; company?: string; quote: string; avatar?: SanityImage }>>(
     testimonialsQuery,
     {},
-    { next: { tags: ["testimonials"] } }
+    fetchOptions(["testimonials"])
   );
 
   const items = data || [];
@@ -374,7 +385,7 @@ function normalizeSkillLevel(level?: number): SkillItem["level"] {
 export async function getSkillsFromSanity(): Promise<SkillGroup[]> {
   if (!hasSanityConfig()) return [];
 
-  const data = await client.fetch<SanitySkill[]>(skillsQuery, {}, { next: { tags: ["skills"] } });
+  const data = await client.fetch<SanitySkill[]>(skillsQuery, {}, fetchOptions(["skills"]));
   const items = data || [];
   if (!items.length) return [];
 

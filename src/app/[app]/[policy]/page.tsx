@@ -6,6 +6,8 @@ import { getAllAppPolicyParams, getAppPolicy } from "@/lib/policies";
 import { TableOfContents } from "@/components/blog/toc";
 import { PortableTextRenderer } from "@/components/blog/portable-text";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   return getAllAppPolicyParams();
 }

@@ -11,6 +11,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Card, CardContent } from "@/components/ui/card";
 import { MermaidDiagram } from "@/components/projects/mermaid-diagram";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const projects = await getProjectsData();
   return projects.map((project) => ({ slug: project.slug }));
