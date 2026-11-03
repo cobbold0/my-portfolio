@@ -6,7 +6,6 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { LinkedInProfileBadge } from "@/components/home/linkedin-profile-badge";
 
 type HeroEditorialProps = {
   profile: {
@@ -17,13 +16,12 @@ type HeroEditorialProps = {
     resumeUrl?: string;
     profileImage?: string;
   };
-  linkedinProfile: { vanity: string; profileUrl: string } | null;
   playStoreUrl?: string;
 };
 
 const words = ["Engineering", "Digital", "Experiences"];
 
-export function HeroEditorial({ profile, linkedinProfile, playStoreUrl }: HeroEditorialProps) {
+export function HeroEditorial({ profile, playStoreUrl }: HeroEditorialProps) {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 120, damping: 22, mass: 0.6 });
@@ -104,11 +102,6 @@ export function HeroEditorial({ profile, linkedinProfile, playStoreUrl }: HeroEd
             </Button>
           ) : null}
         </div>
-        {linkedinProfile ? (
-          <div className="mt-8 max-w-sm border-l border-border pl-4">
-            <LinkedInProfileBadge vanity={linkedinProfile.vanity} profileUrl={linkedinProfile.profileUrl} />
-          </div>
-        ) : null}
       </div>
 
       {profile.profileImage ? (

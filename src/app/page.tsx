@@ -66,7 +66,7 @@ export default async function HomePage() {
       <section className="hero-grid overflow-x-clip border-b" data-analytics-section="home_hero">
         <div className="container py-48">
           <AnimatedSection delay={0.03}>
-            <HeroEditorial profile={profile} linkedinProfile={linkedinProfile} playStoreUrl={playStoreUrl} />
+            <HeroEditorial profile={profile} playStoreUrl={playStoreUrl} />
           </AnimatedSection>
         </div>
       </section>
