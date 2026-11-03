@@ -2,6 +2,185 @@ import type { Project } from "@/lib/types";
 
 export const projects: Project[] = [
   {
+    slug: "phone-18-calculator-receipt-scanner",
+    title: "Phone 18 Calculator — Receipt Scanner & Math Notes",
+    summary:
+      "Monetized Android productivity utility with 17,000+ downloads. Features an iOS-inspired fluid interface, scientific math engine, Math Notes, real-time receipt OCR scanner, and financial tools.",
+    problem:
+      "Standard mobile calculators lack integrated receipt OCR scanning for expense tracking, receipt itemization, and real-time equation evaluation directly from physical receipts.",
+    solution:
+      "Built a lightweight, beautifully styled Android calculator app combining fluid Glass UI themes, ML Kit text recognition for receipt scanning, financial tip/tax splitters, and AdMob monetization.",
+    responsibilities: [
+      "Designed and implemented complete architecture with Kotlin and Jetpack Compose",
+      "Integrated ML Kit Vision OCR for real-time receipt scanning and automated total parsing",
+      "Built currency converters, tax calculation, loan calculators, and editable calculation history",
+      "Implemented monetization via Google AdMob and Google Play In-App Billing"
+    ],
+    impactMetrics: [
+      "17,000+ Downloads on Google Play Store",
+      "Fully monetized with active recurring ad and premium revenue",
+      "High user retention with 4.5+ star review average"
+    ],
+    techStack: [
+      "Kotlin",
+      "Jetpack Compose",
+      "ML Kit (OCR Vision)",
+      "Android SDK",
+      "Google AdMob",
+      "In-App Billing",
+      "Room DB"
+    ],
+    category: "Mobile",
+    featured: true,
+    year: 2025,
+    screenshots: [
+      { src: "/projects/placeholder.svg", alt: "Phone 18 Calculator interface" },
+      { src: "/projects/placeholder.svg", alt: "Receipt scanner and math notes" }
+    ],
+    links: {
+      playStore: "https://play.google.com/store/apps/details?id=com.cobbold.iphone17calculator"
+    },
+    architecture: {
+      title: "Receipt Scanner & Math Engine",
+      mermaid: `flowchart LR\nA[Camera / Receipt Image] --> B[ML Kit OCR Engine]\nB --> C[Equation & Total Parser]\nC --> D[Calculator State Engine]\nD --> E[Monetized Compose UI (AdMob)]`
+    }
+  },
+  {
+    slug: "shortcodes-ghana-events-ussd",
+    title: "Shortcodes Ghana — USSD Shortcuts & Live Events Hub",
+    summary:
+      "Ghana's unified gateway for all telecom USSD shortcuts, commercial bank codes, and trending live events & festival ticketing hub (AfroFuture, Tidal Rave, Detty December).",
+    problem:
+      "Mobile subscribers and event-goers in Ghana face fragmented offline USSD banking codes and chaotic ticket purchasing across disparate channels.",
+    solution:
+      "Engineered an offline-first Android application and accompanying web platform combining instant offline shortcode dialing with live event discovery and verified mobile ticketing passes.",
+    responsibilities: [
+      "Engineered offline USSD shortcut dialer supporting MTN MoMo, Telecel Cash, and AT Ghana",
+      "Built live events discovery engine with event categories, venue locations, and ticket tiers",
+      "Implemented verified mobile ticket pass generation and QR validation",
+      "Published, deployed, and actively maintain both the Android app and web platform"
+    ],
+    impactMetrics: [
+      "Unified 100+ telecom, mobile banking, and government USSD shortcuts",
+      "Live web portal and ticketing hub at shortcodes.cobbold.dev",
+      "Published and maintained on Google Play Store with 4.8★ user rating"
+    ],
+    techStack: [
+      "Android SDK",
+      "Kotlin",
+      "Jetpack Compose",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Mobile Money APIs"
+    ],
+    category: "Mobile",
+    featured: true,
+    year: 2026,
+    screenshots: [
+      { src: "/projects/placeholder.svg", alt: "Shortcodes Ghana directory" },
+      { src: "/projects/placeholder.svg", alt: "Live events & ticketing hub" }
+    ],
+    links: {
+      live: "https://shortcodes.cobbold.dev",
+      playStore: "https://play.google.com/store/apps/details?id=com.cobbold.dialhash",
+      github: "https://github.com/cobbold0/shortcodes"
+    },
+    architecture: {
+      title: "Shortcodes & Events Engine Architecture",
+      mermaid: `flowchart TD\nA[User] --> B[Shortcodes Mobile App / Web]\nB --> C[Offline USSD Engine (Telco Intents)]\nB --> D[Live Events Hub]\nD --> E[Verified Mobile Pass Issuer]\nC --> F[MTN / Telecel / AT Mobile Networks]`
+    }
+  },
+  {
+    slug: "datawise-data-usage-manager",
+    title: "DataWise — Data Usage Manager & Firewall",
+    summary:
+      "Android network management utility that monitors cellular and Wi-Fi bundle consumption, forecasts usage, and features an on-device local firewall to block background data hogs.",
+    problem:
+      "Unexpected mobile background data consumption quickly depletes expensive prepaid cellular bundles in emerging markets without transparent user control.",
+    solution:
+      "Engineered an on-device Android data manager that tracks per-app bandwidth usage in real time and utilizes a local VpnService firewall to block background apps without external proxy servers.",
+    responsibilities: [
+      "Implemented local on-device VpnService packet filter for granular per-app data blocking",
+      "Built background usage forecasting algorithms based on historical consumption",
+      "Designed threshold alerting and custom daily/monthly quota notifications",
+      "Published, deployed, and maintain the app on the Google Play Store"
+    ],
+    impactMetrics: [
+      "Saves users up to 30% on monthly cellular data bundle consumption",
+      "100% private: Zero external server routing using local Android VpnService",
+      "Published and maintained on Google Play Store"
+    ],
+    techStack: [
+      "Kotlin",
+      "Android SDK",
+      "VpnService",
+      "Jetpack Compose",
+      "Room DB",
+      "WorkManager",
+      "Coroutines"
+    ],
+    category: "Mobile",
+    featured: true,
+    year: 2025,
+    screenshots: [
+      { src: "/projects/placeholder.svg", alt: "DataWise usage dashboard" },
+      { src: "/projects/placeholder.svg", alt: "Local firewall per-app control" }
+    ],
+    links: {
+      playStore: "https://play.google.com/store/apps/details?id=com.cobbold.datawise"
+    },
+    architecture: {
+      title: "Local Firewall & Telemetry Pipeline",
+      mermaid: `flowchart TD\nA[Device Traffic] --> B[Local Android VpnService]\nB --> C{App Blocked for Mobile?}\nC -- Yes (Mobile) --> D[Drop Packet]\nC -- No / Wi-Fi --> E[Allow & Log Bytes in Room DB]\nE --> F[DataWise Analytics Dashboard]`
+    }
+  },
+  {
+    slug: "spool-media-downloader-audio-extraction",
+    title: "Spool — High-Fidelity Stream Piping & Audio Extraction",
+    summary:
+      "High-performance online video capture and synchronous MP3 audio extraction utility for authorized web video streams, operating with zero server-side file storage.",
+    problem:
+      "Online media extraction tools are bloated with intrusive ad networks, slow server-side queues, and privacy-invasive tracking scripts.",
+    solution:
+      "Architected a clean, Apple-inspired Next.js web application that directly pipes streaming video up to 1080p and executes synchronous ffmpeg audio conversion on the fly with SSRF protection.",
+    responsibilities: [
+      "Built responsive, ultra-clean web interface with Next.js App Router and Tailwind CSS",
+      "Engineered serverless stream piping avoiding permanent server disk usage",
+      "Integrated synchronous ffmpeg MP3 audio extraction pipeline",
+      "Enforced strict SSRF protection and safe streaming rate limits"
+    ],
+    impactMetrics: [
+      "Live web utility at spool.cobbold.dev",
+      "Direct client stream piping with zero storage overhead",
+      "Instant 1080p video downloads and synchronous MP3 conversion"
+    ],
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "ffmpeg",
+      "Tailwind CSS",
+      "Docker",
+      "Vercel"
+    ],
+    category: "Frontend",
+    featured: true,
+    year: 2026,
+    screenshots: [
+      { src: "/projects/placeholder.svg", alt: "Spool video downloader homepage" },
+      { src: "/projects/placeholder.svg", alt: "MP3 conversion progress screen" }
+    ],
+    links: {
+      live: "https://spool.cobbold.dev",
+      github: "https://github.com/cobbold0"
+    },
+    architecture: {
+      title: "Stream Piping Pipeline",
+      mermaid: `flowchart LR\nA[User Request URL] --> B[Next.js API Route]\nB --> C[SSRF Validation & Stream Parser]\nC --> D[ffmpeg Audio / Video Transcoder]\nD --> E[Chunked HTTP Response to Browser]`
+    }
+  },
+  {
     slug: "fieldtool-auction-data-capture",
     title: "FieldTool — Auction Data-Capture Platform",
     summary:
@@ -115,7 +294,7 @@ export const projects: Project[] = [
       "Paystack"
     ],
     category: "Frontend",
-    featured: true,
+    featured: false,
     year: 2026,
     screenshots: [
       { src: "/projects/placeholder.svg", alt: "EcoCoders learning portal" },
@@ -160,7 +339,7 @@ export const projects: Project[] = [
       "LLM APIs"
     ],
     category: "Mobile",
-    featured: true,
+    featured: false,
     year: 2026,
     screenshots: [
       { src: "/projects/placeholder.svg", alt: "Bernie AI chat screen" },

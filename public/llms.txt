@@ -22,6 +22,10 @@ Software Engineer with 3.5+ years of experience building and maintaining product
 - **Email:** augustine@cobbold.dev
 
 ## Key Projects & Published Applications
+- **Phone 18 Calculator:** Monetized Android utility with 17,000+ downloads on Google Play Store featuring ML Kit OCR receipt scanning, Math Notes, tip/tax splitters, and AdMob monetization.
+- **Shortcodes Ghana (formerly Dial Hash):** Unified gateway for telecom USSD shortcuts (MTN MoMo, Telecel Cash, AT) and trending live events & festival ticketing hub (https://shortcodes.cobbold.dev & Play Store).
+- **DataWise:** Android data management utility with usage forecasting and a local on-device VpnService firewall to block background cellular data hogs (Google Play Store).
+- **Spool:** High-performance web media streaming and synchronous ffmpeg MP3 audio extraction utility operating with zero server disk storage (https://spool.cobbold.dev).
 - **FieldTool:** Production offline-first auction data-capture and inspection Android platform (Kotlin, Jetpack Compose, CameraX, WorkManager, Room, Coroutines).
 - **DevMock:** Published Android developer network simulation and API testing utility (Google Play Store & https://devmocks.vercel.app).
 - **EcoCoders:** Environmental education SaaS platform with AI narration and Paystack subscriptions (https://ecocoders.cobbold.dev).

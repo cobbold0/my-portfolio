@@ -20,8 +20,8 @@ export const socials: SocialLink[] = [
 ];
 
 export const metrics: Metric[] = [
+  { label: "Calculator downloads", value: "17,000+" },
   { label: "Production experience", value: "3.5+ Years" },
-  { label: "Media uploads / user", value: "1000s Daily" },
   { label: "Crash-free sessions", value: "99.6%" }
 ];
 
