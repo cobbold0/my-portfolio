@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
   const path = request.nextUrl.searchParams.get("path");
 
   if (tag) {
-    revalidateTag(tag);
+    revalidateTag(tag, "max");
     return NextResponse.json({ revalidated: true, tag });
   }
 
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
   }
 
   const allTags = ["settings", "projects", "posts", "experience", "testimonials", "skills", "policies"];
-  allTags.forEach((t) => revalidateTag(t));
+  allTags.forEach((t) => revalidateTag(t, "max"));
   revalidatePath("/", "layout");
 
   return NextResponse.json({ revalidated: true, allTags, path: "/" });
@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
   }
 
   const tags = tagsForPayload(payload);
-  tags.forEach((tag) => revalidateTag(tag));
+  tags.forEach((tag) => revalidateTag(tag, "max"));
   revalidatePath("/", "layout");
 
   return NextResponse.json({ revalidated: true, tags, type: payload._type || "unknown" });
