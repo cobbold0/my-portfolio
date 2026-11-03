@@ -34,8 +34,8 @@ export const projects: Project[] = [
     featured: true,
     year: 2025,
     screenshots: [
-      { src: "/projects/placeholder.svg", alt: "Phone 18 Calculator interface" },
-      { src: "/projects/placeholder.svg", alt: "Receipt scanner and math notes" }
+      { src: "/projects/phone-18/screenshot-1.png", alt: "Phone 18 Calculator interface" },
+      { src: "/projects/phone-18/screenshot-2.png", alt: "Receipt scanner and math notes" }
     ],
     links: {
       playStore: "https://play.google.com/store/apps/details?id=com.cobbold.iphone17calculator"
@@ -78,8 +78,8 @@ export const projects: Project[] = [
     featured: true,
     year: 2026,
     screenshots: [
-      { src: "/projects/placeholder.svg", alt: "Shortcodes Ghana directory" },
-      { src: "/projects/placeholder.svg", alt: "Live events & ticketing hub" }
+      { src: "/projects/shortcodes-ghana/feature-graphic.png", alt: "Shortcodes Ghana directory" },
+      { src: "/projects/shortcodes-ghana/screenshot-1.png", alt: "Live events & ticketing hub" }
     ],
     links: {
       live: "https://shortcodes.cobbold.dev",
@@ -124,8 +124,8 @@ export const projects: Project[] = [
     featured: true,
     year: 2025,
     screenshots: [
-      { src: "/projects/placeholder.svg", alt: "DataWise usage dashboard" },
-      { src: "/projects/placeholder.svg", alt: "Local firewall per-app control" }
+      { src: "/projects/datawise/screenshot-1.png", alt: "DataWise usage dashboard" },
+      { src: "/projects/datawise/screenshot-2.png", alt: "Local firewall per-app control" }
     ],
     links: {
       playStore: "https://play.google.com/store/apps/details?id=com.cobbold.datawise"
@@ -168,8 +168,8 @@ export const projects: Project[] = [
     featured: true,
     year: 2026,
     screenshots: [
-      { src: "/projects/placeholder.svg", alt: "Spool video downloader homepage" },
-      { src: "/projects/placeholder.svg", alt: "MP3 conversion progress screen" }
+      { src: "/projects/spool/cover.png", alt: "Spool video downloader homepage" },
+      { src: "/projects/spool/cover.png", alt: "MP3 conversion progress screen" }
     ],
     links: {
       live: "https://spool.cobbold.dev",
@@ -442,4 +442,166 @@ export const projects: Project[] = [
       mermaid: `flowchart TD\nA[Internet Traffic] --> B[Cloudflare Tunnel]\nB --> C[Proxmox VE Host]\nC --> D[Coolify PaaS Containers]\nD --> E[(PostgreSQL / Redis)]\nD --> F[EcoCoders & Services]\nC --> G[Tailscale Zero-Trust Remote Access]`
     }
   }
+,
+  {
+    "slug": "school-management-system-development-environment-architecture",
+    "title": "School Management System-Development Environment Architecture",
+    "summary": "Designed a cost-efficient and production-aligned development environment for a school management system backend leveraging Docker, Redis with BullMQ, and PM2.",
+    "problem": "During the MVP phase, there was a need for a reliable and production-aligned development environment without incurring high infrastructure costs while supporting background processing and external internet access.",
+    "solution": "Set up a lightweight development environment by running PostgreSQL and Redis in Docker, using BullMQ for background job processing, managing the Node.js backend with PM2, and tunneling traffic via DigitalOcean VPS.",
+    "responsibilities": [
+        "Ran PostgreSQL and Redis in Docker for local development and async tasks",
+        "Implemented background queues with BullMQ and Redis",
+        "Exposed the local service through DigitalOcean VPS port tunneling for real-world client validation"
+    ],
+    "impactMetrics": [
+        "80% MVP completion of backend system",
+        "Stable Dockerized PostgreSQL and Redis services",
+        "Zero production hosting costs during MVP validation"
+    ],
+    "techStack": [
+        "NestJS",
+        "Node.js",
+        "PostgreSQL",
+        "Docker",
+        "Redis",
+        "BullMQ",
+        "PM2",
+        "TypeScript"
+    ],
+    "category": "Backend",
+    "featured": true,
+    "year": 2025,
+    "screenshots": [
+        {
+            "src": "https://cdn.sanity.io/images/km65wdqh/production/4b6a26a991c119d9530a621fa3283392ed3b5ad5-1904x841.png",
+            "alt": "School Management System Architecture"
+        }
+    ],
+    "links": {
+        "live": "http://stephenandcobbold.com/api"
+    },
+    "architecture": {
+        "title": "VPS-Backed Local Development Deployment",
+        "mermaid": "flowchart LR\nClient --> VPS[DigitalOcean VPS Tunnel]\nVPS --> PM2[PM2 Process Manager]\nPM2 --> API[NestJS Backend]\nAPI --> PG[(Docker Postgres)]\nAPI --> RDS[(Docker Redis)]\nWKR[Worker Process] --> RDS"
+    }
+},
+  {
+    "slug": "nexgt-mall-african-global-commerce-platform",
+    "title": "NExGT Mall: African Global Commerce Platform",
+    "summary": "Unified digital marketplace enabling African merchants to manage inventory, track cross-border orders, and reach global buyers with multi-vendor dashboards.",
+    "problem": "African merchants struggle to access global markets due to fragmented digital commerce infrastructure, payment friction, and limited visibility.",
+    "solution": "Built a scalable multi-vendor commerce platform with seller dashboards, administrative management consoles, Supabase authentication, and automated email services.",
+    "responsibilities": [
+        "Developed seller and admin management consoles with Next.js",
+        "Implemented multi-tenant product catalog and order processing flows",
+        "Integrated Zoho SMTP email notifications and Supabase auth"
+    ],
+    "impactMetrics": [
+        "Maintained 99.9% crash-free production uptime",
+        "Successfully onboarded early-stage merchants across Ghana"
+    ],
+    "techStack": [
+        "Next.js",
+        "TypeScript",
+        "Prisma",
+        "PostgreSQL",
+        "Supabase",
+        "Tailwind CSS"
+    ],
+    "category": "Frontend",
+    "featured": true,
+    "year": 2025,
+    "screenshots": [
+        {
+            "src": "https://cdn.sanity.io/images/km65wdqh/production/ea611563f4821b385dcdcbc49cdd79d73c2b75ae-1898x946.png",
+            "alt": "NExGT Mall Marketplace Interface"
+        }
+    ],
+    "links": {
+        "live": "https://ecommerce-dashboard-liard.vercel.app"
+    },
+    "architecture": {
+        "title": "Commerce Architecture",
+        "mermaid": "flowchart LR\nSeller --> Dash[Dashboard UI Next.js]\nCustomer --> Store[Storefront UI]\nDash --> API[Next.js API Routes]\nAPI --> Prisma[Prisma ORM] --> DB[(PostgreSQL)]"
+    }
+},
+  {
+    "slug": "circle-pay-digital-rotational-savings-platform",
+    "title": "Circle Pay - Digital Rotational Savings Platform",
+    "summary": "Fintech platform digitizing traditional rotational savings (susu) groups with automated contribution schedules, payouts, and Paystack integration.",
+    "problem": "Traditional rotational savings groups rely heavily on manual tracking and trust-based informal record keeping, causing disputes and missed contributions.",
+    "solution": "Digitized the rotational savings process by allowing users to form verified savings circles, schedule contributions, track payouts, and monitor balances in real time.",
+    "responsibilities": [
+        "Architected circle management schemas and automated payout scheduling",
+        "Integrated Paystack checkout and real-time webhook listeners",
+        "Built responsive mobile-first dashboard with Next.js and Supabase"
+    ],
+    "impactMetrics": [
+        "Automated contribution tracking and payout schedules",
+        "Zero payment discrepancy across active test circles"
+    ],
+    "techStack": [
+        "Next.js",
+        "PostgreSQL",
+        "Tailwind CSS",
+        "Paystack",
+        "Supabase"
+    ],
+    "category": "Backend",
+    "featured": true,
+    "year": 2026,
+    "screenshots": [
+        {
+            "src": "https://cdn.sanity.io/images/km65wdqh/production/6012746241ad2711abf973436dd1708905308037-1906x928.png",
+            "alt": "Circle Pay Platform Dashboard"
+        }
+    ],
+    "links": {
+        "github": "https://github.com/cobbold0/circle-pay"
+    },
+    "architecture": {
+        "title": "Circle Pay Flow",
+        "mermaid": "flowchart LR\nUser --> Web[Next.js Frontend]\nWeb --> API[Next.js API]\nWeb --> Pay[Paystack Checkout]\nPay --> Webhook[Paystack Webhook] --> API\nAPI --> DB[(Supabase Postgres)]"
+    }
+},
+  {
+    "slug": "dial-hash",
+    "title": "Dial Hash \u2014 USSD Quick-Dialing Utility",
+    "summary": "Native Android utility with 100+ downloads on Google Play providing pre-populated and customizable USSD shortcut dialing for major telecom networks.",
+    "problem": "Many mobile users struggle to remember and manually type complex USSD strings for banking, airtime, and mobile money services.",
+    "solution": "Developed a clean, lightweight Android application storing organized USSD shortcuts across telecom networks with 1-tap dial intents.",
+    "responsibilities": [
+        "Independently designed, developed, and published native Android application",
+        "Integrated Room DB for offline shortcut persistence and custom user codes",
+        "Managed Google Play Console releases and production updates"
+    ],
+    "impactMetrics": [
+        "5.0 Rating on Google Play Store with 18+ reviews",
+        "100+ active Google Play Store downloads"
+    ],
+    "techStack": [
+        "Android SDK",
+        "Java",
+        "Kotlin",
+        "Room DB",
+        "Firebase"
+    ],
+    "category": "Mobile",
+    "featured": true,
+    "year": 2023,
+    "screenshots": [
+        {
+            "src": "https://cdn.sanity.io/images/km65wdqh/production/69628e017ed98aea78e6c3505315ee7ab9e8d77f-773x353.png",
+            "alt": "Dial Hash Google Play banner"
+        }
+    ],
+    "links": {
+        "playStore": "https://play.google.com/store/apps/details?id=com.cobbold.dialhash"
+    },
+    "architecture": {
+        "title": "MVVM Mobile Architecture",
+        "mermaid": "flowchart LR\nUI[Activity / Compose UI] --> VM[ViewModel]\nVM --> Repo[Repository]\nRepo --> DB[(Room DB)]\nRepo --> Telco[Android Telco Intent Manager]"
+    }
+}
 ];

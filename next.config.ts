@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.sanity.io"
+      },
+      {
+        protocol: "https",
+        hostname: "play-lh.googleusercontent.com"
+      },
+      {
+        protocol: "https",
+        hostname: "shortcodes.cobbold.dev"
+      },
+      {
+        protocol: "https",
+        hostname: "spool.cobbold.dev"
       }
     ]
   },

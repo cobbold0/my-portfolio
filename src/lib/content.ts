@@ -46,19 +46,12 @@ export async function getSiteProfile(): Promise<SiteSettingsData> {
 }
 
 export async function getProjectsData() {
-  const localItems = localProjects;
   const source = getContentSource();
   if (source === "sanity" && isSanityEnabled()) {
     const projects = await getProjectsFromSanity();
-    if (projects.some((p) => p.slug.includes("phone-18") || p.slug.includes("datawise") || p.slug.includes("shortcodes"))) {
-      return projects;
-    }
-    if (localItems.length > 0) {
-      return localItems;
-    }
     if (projects.length > 0) return projects;
   }
-  return localItems;
+  return localProjects;
 }
 
 export async function getProjectDataBySlug(slug: string) {
