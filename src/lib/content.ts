@@ -15,13 +15,19 @@ import {
 } from "@/lib/sanity/data";
 
 export async function getSiteProfile(): Promise<SiteSettingsData> {
+  const local = getLocalDefaults();
   const source = getContentSource();
   if (source === "sanity" && isSanityEnabled()) {
     const settings = await getSiteSettingsFromSanity();
-    if (settings) return settings;
+    if (settings) {
+      return {
+        ...settings,
+        metrics: settings.metrics?.some((m) => m.label.toLowerCase().includes("downloads")) ? settings.metrics : local.metrics,
+        resumeUrl: "/resume.pdf"
+      };
+    }
   }
 
-  const local = getLocalDefaults();
   return {
     name: local.profile.name,
     roleLine: local.profile.roleLine,
@@ -40,12 +46,19 @@ export async function getSiteProfile(): Promise<SiteSettingsData> {
 }
 
 export async function getProjectsData() {
+  const localItems = localProjects;
   const source = getContentSource();
   if (source === "sanity" && isSanityEnabled()) {
     const projects = await getProjectsFromSanity();
+    if (projects.some((p) => p.slug.includes("phone-18") || p.slug.includes("datawise") || p.slug.includes("shortcodes"))) {
+      return projects;
+    }
+    if (localItems.length > 0) {
+      return localItems;
+    }
     if (projects.length > 0) return projects;
   }
-  return localProjects;
+  return localItems;
 }
 
 export async function getProjectDataBySlug(slug: string) {

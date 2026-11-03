@@ -3,6 +3,9 @@ import { absoluteUrl } from "@/lib/site";
 import { getProjectsData } from "@/lib/content";
 import { ProjectsClient } from "@/components/projects/projects-client";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Projects",
   description: "Case studies across backend, frontend, and mobile product engineering.",
