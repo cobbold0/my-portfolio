@@ -1,27 +1,36 @@
 # Augustine Cobbold
 
-> Software Engineer specializing in Mobile Development (Android/Kotlin, React Native), Modern Web (Next.js, TypeScript), and Backend Architecture.
+> Software Engineer | Mobile & Full-Stack Development | AI & Automation Builder
+
+## Professional Summary
+Software Engineer with 3.5+ years of experience building and maintaining production software, specializing in native Android development with Kotlin, Java, and Jetpack Compose, full-stack Next.js/TypeScript applications, and workflow automation. Currently IT Specialist / CTO at Basilissa leading internal business systems and architecture. Previously developed FieldTool for Purple Wave, Inc. via DevOps Africa.
+
+## Current & Recent Experience
+- **IT Specialist / CTO | Basilissa (2026 – Present | Ghana):** Leading internal business systems, customer feedback, and HR assessment workflows across frontend, backend, databases, and deployment.
+- **Software Developer (Android) | Purple Wave, Inc. via DevOps Africa (Jan 2023 – Jul 2026):** Developed and maintained production Android features for FieldTool, an offline-first inspection and auction data-capture platform handling thousands of uploads and 200+ media files per asset daily.
+- **Website & Systems Administrator | Awiebo College of Education (2022):** Managed institution website, admissions systems, and digital infrastructure.
+
+## Education & Qualifications
+- **Diploma in Information Technology:** Kwame Nkrumah University of Science and Technology (KNUST) (2026 – 2028)
+- **Professional Software Development:** Codetrain (2021 – 2022)
 
 ## Key Profiles & Links
 - **Portfolio & Case Studies:** https://augustine.cobbold.dev
 - **GitHub:** https://github.com/cobbold0
 - **LinkedIn:** https://www.linkedin.com/in/augustinecobbold
-- **Google Play Developer:** https://play.google.com/store/apps/developer?id=Cobbold
+- **Google Play Developer Console:** https://play.google.com/store/apps/developer?id=Cobbold
+- **Email:** augustine@cobbold.dev
 
 ## Key Projects & Published Applications
-- **DevMock:** Network simulation and traffic control testing tool for Android developers.
-- **Dial Hash (Shortcodes):** USSD quick-dialing and offline transaction utility app.
-- **Circle Pay:** Digital rotational savings and cooperative finance platform.
-- **Nexgt Mall:** Multi-vendor African commerce platform.
-- **Web Developer Utilities:** UUID Generator, JSON Formatter, JWT Decoder, and JS Sandbox at https://augustine.cobbold.dev/tools
+- **FieldTool:** Production offline-first auction data-capture and inspection Android platform (Kotlin, Jetpack Compose, CameraX, WorkManager, Room, Coroutines).
+- **DevMock:** Published Android developer network simulation and API testing utility (Google Play Store & https://devmocks.vercel.app).
+- **EcoCoders:** Environmental education SaaS platform with AI narration and Paystack subscriptions (https://ecocoders.cobbold.dev).
+- **Bernie AI:** Android AI assistant platform integrating conversational LLMs, task automation, and WorkManager notifications.
+- **Debbie:** Multi-channel personal automation assistant built with n8n, Telegram, and WhatsApp APIs.
+- **Homelab Cloud Infrastructure:** High-availability self-hosted private cloud built on Proxmox VE, Coolify PaaS, Docker, Cloudflare Tunnels, and Tailscale.
 
 ## Core Technical Competencies
-- **Mobile:** Android SDK, Kotlin, Java, Jetpack Compose, RoomDB, React Native, Expo, App Store & Google Play deployment.
-- **Frontend / Full-stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, shadcn/ui.
-- **Backend & Cloud:** Node.js, NestJS, PostgreSQL, Redis, Docker, Firebase, REST APIs.
-- **Architecture Specialization:** Resilient offline sync, queue-based data synchronization, conflict resolution, mobile security.
-
-## Technical Writing
-- **Designing Offline Sync for Mobile Field Apps:** Architecture patterns, local data storage, queue-based uploads, conflict resolution, and network-aware synchronization.
-- **Mobile Money Scams Are Rising: Here’s How to Protect Yourself:** Analysis of transaction fraud patterns and prevention in emerging markets.
-- **Roadmap to Become an Android Developer in 2026:** Modern learning and engineering path from fundamentals to production-ready Android systems.
+- **Mobile Development:** Android SDK, Kotlin, Java, Jetpack Compose, XML layouts, MVVM, Coroutines, Flow, Hilt, Room, CameraX, WorkManager, Offline Sync, React Native, Play Store releases.
+- **Web & Backend:** Next.js (App Router), React, TypeScript, Node.js, REST APIs, JSON, PostgreSQL, Redis, SQLite, Firebase, AWS Cognito, JWT auth, PHP, SQL.
+- **Cloud & DevOps:** Docker, Proxmox, Coolify, Cloudflare, Google Cloud Run, Vercel, Tailscale, CI/CD, GitHub Actions, Datadog, Sentry.
+- **AI & Automation:** n8n Workflow Automation, LLM Integrations, Prompt Engineering.

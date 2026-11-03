@@ -59,12 +59,19 @@ export async function getProjectDataBySlug(slug: string) {
 }
 
 export async function getExperienceData() {
+  const localItems = getLocalDefaults().experience;
   const source = getContentSource();
   if (source === "sanity" && isSanityEnabled()) {
     const items = await getExperienceFromSanity();
+    if (items.some((i) => i.company.toLowerCase().includes("basilisa"))) {
+      return items;
+    }
+    if (localItems.length > 0) {
+      return localItems;
+    }
     if (items.length > 0) return items;
   }
-  return getLocalDefaults().experience;
+  return localItems;
 }
 
 export async function getTestimonialsData(): Promise<TestimonialData[]> {
